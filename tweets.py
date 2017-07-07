@@ -24,7 +24,6 @@ def getTweets(userName):
 getTweets("MayoClinic")
 ## extract tweet from blocks
 result = [tweet.text.encode('utf-8') for tweet in totalTweets]
-with open('tweet_mayo.csv', 'a') as f:
+with open('tweet_mayo.csv', 'wb') as f:
 	writer = csv.writer(f)
-	for row in result:
-		writer.writerow(row)
+	writer.writerows(result)
