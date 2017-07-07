@@ -4,6 +4,8 @@ This is a Python traits predictor
 ## Features
 - Predicting users' personality traits.
 - TBD
+### Documents
+- ```tweets.py```: extract tweets from an account page.
 
 ## Citation
 - J. Yang, J. Leskovec. Temporal Variation in Online Media. ACM International Conference on Web Search and Data Mining (WSDM '11), 2011.
