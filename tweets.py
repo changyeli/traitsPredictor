@@ -1,5 +1,4 @@
 import tweepy
-import csv
 
 consumer_key = 'B0ObhZGHXZdvdeGdGJRzsUp6B'
 consumer_secret = '20gvy4MDnDPFglqqWPoR7vFsfk5otB9lC6WzA0mBBdqHI9khwN'
@@ -24,6 +23,7 @@ def getTweets(userName):
 getTweets("MayoClinic")
 ## extract tweet from blocks
 result = [tweet.text.encode('utf-8') for tweet in totalTweets]
-with open('tweet_mayo.csv', 'wb') as f:
-	writer = csv.writer(f)
-	writer.writerows(result)
+## write to .txt file
+with open('tweet_mayo.txt', 'w') as f:
+	for s in result:
+		f.write(s + '\n')
