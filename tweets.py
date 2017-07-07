@@ -20,10 +20,10 @@ def getTweets(userName):
 		totalTweets.extend(temp)
 		last = totalTweets[-1].id - 1
 
-getTweets("MayoClinic")
+getTweets("Padilla_Comm")
 ## extract tweet from blocks
 result = [tweet.text.encode('utf-8') for tweet in totalTweets]
 ## write to .txt file
-with open('tweet_mayo.txt', 'w') as f:
+with open('tweet_padilla.txt', 'w') as f:
 	for s in result:
 		f.write(s + '\n')
