@@ -4,8 +4,7 @@ This is a Python traits predictor
 ## Features
 - Predicting users' personality traits.
 - TBD
-## Data Source
-The dataset used in this repo can be found [here](https://aminer.org/data-sna)
+
 ## Citation
 - J. Yang, J. Leskovec. Temporal Variation in Online Media. ACM International Conference on Web Search and Data Mining (WSDM '11), 2011.
 - Golbeck, J., Robles, C., Edmondson, M., & Turner, K. (2011, October). Predicting personality from twitter. In Privacy, Security, Risk and Trust (PASSAT) and 2011 IEEE Third Inernational Conference on Social Computing (SocialCom), 2011 IEEE Third International Conference on (pp. 149-156). IEEE.
