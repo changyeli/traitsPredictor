@@ -1,14 +1,24 @@
-import tweepy
+## load packages
+import re
+from bs4 import BeautifulSoup as bs 
+import urllib2
+import csv
 
-consumer_key = "B0ObhZGHXZdvdeGdGJRzsUp6B"
-consumer_secret = "20gvy4MDnDPFglqqWPoR7vFsfk5otB9lC6WzA0mBBdqHI9khwN"
-access_key = "140343853-OlHFgmgNZJwDfi1gXHDLhR5zmdjFvC3MVIvsMrLJ"
-access_secret = "cJKQWdJGVsib56vkGL18hO20x4KX5U56TEuHrmtYIWTJA"
+## data inilization
+text = []
 
-user = "Padilla_Comm"
-auto = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auto.set_access_token(access_key, access_secret)
-api = tweepy.API(auto)
+## functions
+def readHTML(user):	
+	my_page = urllib2.urlopen('https://twitter.com/' + str(user))
+	soup = bs(my_page, 'lxml')
+	return(soup)
 
-client = api.get_user(user)
-print(client.screen_name)
+def getText(soup):
+	for item in soup.findAll('p', attrs = {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'}):
+		text.append(item.text.encode('utf-8'))
+
+
+soup = readHTML("MayoClinic")
+getText(soup)
+for item in text:
+	print item
