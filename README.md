@@ -6,6 +6,7 @@ This is a Python traits predictor
 - TBD
 ### Documents
 - ```tweets.py```: extract tweets from Twitter accounts: including users and companies.
+- ```tweet_***.txt```: tweets for training data. ```***``` indicated Twitter username.
 
 ## Citation
 - J. Yang, J. Leskovec. Temporal Variation in Online Media. ACM International Conference on Web Search and Data Mining (WSDM '11), 2011.
