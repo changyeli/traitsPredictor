@@ -15,3 +15,5 @@ This is a Python traits predictor
 - Lee, K., Mahmud, J., Chen, J., Zhou, M., & Nichols, J. (2014, February). Who will retweet this?: Automatically identifying and engaging strangers on twitter to spread information. In Proceedings of the 19th international conference on Intelligent User Interfaces (pp. 247-256). ACM.
 - Yang, H., & Li, Y. (2013). Identifying user needs from social media. IBM Research Division, San Jose, 11.
 - Gill, A. J., Nowson, S., & Oberlander, J. (2009, May). What Are They Blogging About? Personality, Topic and Motivation in Blogs. In ICWSM.
+- Turney, P. D. (2002, July). Thumbs up or thumbs down?: semantic orientation applied to unsupervised classification of reviews. In Proceedings of the 40th annual meeting on association for computational linguistics (pp. 417-424). Association for Computational Linguistics.
+- Pang, B., Lee, L., & Vaithyanathan, S. (2002, July). Thumbs up?: sentiment classification using machine learning techniques. In Proceedings of the ACL-02 conference on Empirical methods in natural language processing-Volume 10 (pp. 79-86). Association for Computational Linguistics.
