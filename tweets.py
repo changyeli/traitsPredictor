@@ -12,9 +12,12 @@ user_tweet = ["katyperry", "justinbieber", "BarackObama", "jimmyfallon", "EmmaWa
 ## inspired by: https://gist.github.com/yanofsky/5436496
 def getTweets(userName):
 	totalTweets = []
-	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-	auth.set_access_token(access_key, access_secret)
-	api = tweepy.API(auth)
+	try:
+		auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+		auth.set_access_token(access_key, access_secret)
+		api = tweepy.API(auth)
+	except:
+		print("Error: Authentication failed")
 	temp = api.user_timeline(userName, count = 200)
 	totalTweets.extend(temp)
 	last = totalTweets[-1].id - 1
