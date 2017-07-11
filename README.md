@@ -5,8 +5,8 @@ This is a Python traits predictor
 - Predicting users' personality traits.
 - TBD
 ### Documents
-- ```tweets.py```: extract tweets from Twitter accounts: including users and companies.
-- ```tweet_***.txt```: tweets for training data. ```***``` indicated Twitter username.
+- ```tweets.py```: extract tweets from Twitter accounts: including users and companies. *UPDATE: changed to dataset mentioned below*
+
 
 ### Dataset
 Z. Cheng, J. Caverlee, and K. Lee. You Are Where You Tweet: A Content-Based Approach to Geo-locating Twitter Users. In Proceeding of the 19th ACM Conference on Information and Knowledge Management (CIKM), Toronto, Oct 2010. 
