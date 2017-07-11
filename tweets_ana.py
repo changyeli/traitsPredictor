@@ -23,6 +23,7 @@ def process(fileName):
 	with open(fileName, 'r') as f:
 		words.extend(strip_punctuation(emoji_pattern.sub('', line)).rstrip() for line in f)
 	token = [nltk.word_tokenize(i) for i in words]
-	return token
-token = process('tweet_jimmyfallon.txt')
-print token
+	stop_words = nltk.corpus.stopwords.words('english')
+	content = [w for w in token if w.lower() not in stop_words]
+	return content
+content = process('tweet_jimmyfallon.txt')
