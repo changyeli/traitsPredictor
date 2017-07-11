@@ -8,6 +8,9 @@ This is a Python traits predictor
 - ```tweets.py```: extract tweets from Twitter accounts: including users and companies.
 - ```tweet_***.txt```: tweets for training data. ```***``` indicated Twitter username.
 
+### Dataset
+Z. Cheng, J. Caverlee, and K. Lee. You Are Where You Tweet: A Content-Based Approach to Geo-locating Twitter Users. In Proceeding of the 19th ACM Conference on Information and Knowledge Management (CIKM), Toronto, Oct 2010. 
+
 ## Citation
 - J. Yang, J. Leskovec. Temporal Variation in Online Media. ACM International Conference on Web Search and Data Mining (WSDM '11), 2011.
 - Golbeck, J., Robles, C., Edmondson, M., & Turner, K. (2011, October). Predicting personality from twitter. In Privacy, Security, Risk and Trust (PASSAT) and 2011 IEEE Third Inernational Conference on Social Computing (SocialCom), 2011 IEEE Third International Conference on (pp. 149-156). IEEE.
