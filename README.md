@@ -3,15 +3,11 @@ This is a Python traits predictor
 
 ## Features
 - Predicting users' personality traits.
-- TBD
+- Predicting user's favorability on pre-defined subject/topics.
 ### Documents
-- ```tweets.py```: extract tweets from Twitter accounts: including users and companies. *UPDATE: changed to dataset mentioned below*
-
-
-### Dataset
-The dataset used in this repo can be found [here](https://archive.org/details/twitter_cikm_2010). Citation for this dataset can be found in the next section.
+- ```fileProcess.py```: pulling data from twitter given some test usernames
 
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
-- Z. Cheng, J. Caverlee, and K. Lee. You Are Where You Tweet: A Content-Based Approach to Geo-locating Twitter Users. In Proceeding of the 19th ACM Conference on Information and Knowledge Management (CIKM), Toronto, Oct 2010. 
 - Yang, H., & Li, Y. (2013). Identifying user needs from social media. IBM Research Division, San Jose, 11.
+- Gou, L., Zhou, M. X., & Yang, H. (2014, April). KnowMe and ShareMe: understanding automatically discovered personality traits from social media and user sharing preferences. In Proceedings of the 32nd annual ACM conference on Human factors in computing systems (pp. 955-964). ACM.
