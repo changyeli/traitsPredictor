@@ -19,6 +19,7 @@ class fileProcess:
  			print("Error: authentication failed")
  		return api
  	def getUserTweet(self, api):
+ 		## user account
  		for each in self.user:
  			total = []
  			emoji_pattern = re.compile(
@@ -36,11 +37,13 @@ class fileProcess:
  				total.extend(temp)
  				last = total[-1].id - 1
  			result = [emoji_pattern.sub(r'', tweet.text).encode('utf-8') for tweet in total]
+ 			## write tweets to file
  			s = "tweet_" + each + ".txt"
  			with open(s, "w") as f:
  				for item in result:
  					f.write(item + "\n")
  			print("finish " + each + "'s tweet scraping.")
+ 		## corporate account
  		for each in self.comm:
  			total = []
  			emoji_pattern = re.compile(
@@ -58,14 +61,12 @@ class fileProcess:
  				total.extend(temp)
  				last = total[-1].id - 1
  			result = [emoji_pattern.sub(r'', tweet.text).encode('utf-8') for tweet in total]
+ 			## write tweets to file
  			s = "tweet_" + each + ".txt"
  			with open(s, "w") as f:
  				for item in result:
  					f.write(item + "\n")
  			print("finish " + each + "'s tweet scraping.")
- 	## write tweets into file to save loading time		
- 	
-
 ## main function
 x = fileProcess()
 api = x.getAPI()
