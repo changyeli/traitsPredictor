@@ -60,6 +60,8 @@ def run():
 	c = c.items()
 	delete_words = [x[0] for x in c if x[1] < 5]
 	x = [item for item in tokens if item not in delete_words]
+	x = list(set(x))
 	with open("documents.class", "w") as f:
-		f.write(x)
+		for each in x:
+			f.write(each + ",")
 run()
