@@ -3,7 +3,6 @@ import nltk
 import os
 import string
 import re
-from collections import Counter
 
 ## find all .txt files
 def getFiles():
@@ -40,7 +39,7 @@ def getDict(tweet):
 		## remove all punctuations in a tweet
 		s = each.translate(None, string.punctuation)
 		tokens.extend(nltk.word_tokenize(emoji_pattern.sub(r'', s)))
-
+	tokens = filter(None, tokens)
 	return tokens
 
 def run():
@@ -49,13 +48,8 @@ def run():
 	for each in docs:
 		tweets.extend(readFile(each))
 	tokens = getDict(tweets)
-	## delete infrequent words
-	c = Counter(x for x in tokens)
-	c = c.items()
-	delete_words = [x[0] for x in c if x[1] < 5]
-	x = [item for item in tokens if item not in delete_words]
-	x = list(set(x))
-	x = x.sort()
+	x = [item for item in list(set(tokens)) if not item.startswith("http")]
+	x = [re.sub(r'[^\w\s]', '', item) for item in x]
 	with open("documents.class", "w") as f:
 		for each in x:
 			f.write(each + ",")

@@ -1,7 +1,9 @@
 ## import ppackages
 import nltk
-from collections import Counter
 import os
+import numpy
+import sklearn
+from sklearn.feature_extraction import DictVectorizer
 
 ## find all .txt files
 def getFiles():
@@ -24,9 +26,9 @@ def readFile(fileName):
 
 ## get training dataset for each account
 # input: level of training dataset, eg: 0.7 of entire tweets
+# input: list of files to iterate
 # output: dict, with username as key, tweets as values
-def getTrain(level):
-	docs = getFiles()
+def getTrain(level, docs):
 	train = {}
 	for row in docs:
 		tweets = readFile(row)
@@ -37,4 +39,34 @@ def getTrain(level):
 		row = row[:-4]
 		train[row] = train_set
 	return train
+## get test dataset for each account
+# input: level of training dataset
+# input: list of files to iterate
+# output: dict, with username as key, tweets as values
+def getTest(level, docs):
+	test = {}
+	for row in docs:
+		tweets = readFile(row)
+		size = int(len(tweets) * level)
+		test_set = tweets[size:]
+		row = row[-6:]
+		row = row[:-4]
+		test[row] = test_set
+	return test
+## tag all words in .class file
+# input: .class file that contains all words
+# output: a list contain pos of words
+def getPOS(fileName):
+	words = []
+	with open(fileName, 'r') as f:
+		for row in f:
+			words.extend(row.split(","))
+	## remove empty string
+	words = filter(None, words)
+	return nltk.pos_tag(words)
 
+def run():
+	docs = getFiles()
+	train = getTrain(0.7, docs)
+	test = getTest(0.7, doce)
+	words = getPOS("documents.class")
