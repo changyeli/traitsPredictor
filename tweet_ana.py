@@ -23,7 +23,7 @@ def readFile(fileName):
 		for row in f:
 			tweets.append(row.rsplit("\n")[0].lower())
 	return tweets
-## get dictionary for all users' tweet
+## get list for all users' tweet
 # input: list tweets; each entry is a tweet that user sent
 # output: list that contains all words/tokenizers of users' tweet
 def getDict(tweet):
@@ -43,12 +43,6 @@ def getDict(tweet):
 
 	return tokens
 
-## testing place
-#tweets = readFile("tweet_Oprah.txt")
-#docs = getFiles()
-#tokens = getDict(tweets)
-#print len(set(tokens))
-
 def run():
 	docs = getFiles()
 	tweets = []
@@ -61,6 +55,7 @@ def run():
 	delete_words = [x[0] for x in c if x[1] < 5]
 	x = [item for item in tokens if item not in delete_words]
 	x = list(set(x))
+	x = x.sort()
 	with open("documents.class", "w") as f:
 		for each in x:
 			f.write(each + ",")
