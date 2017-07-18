@@ -3,13 +3,14 @@ import nltk
 import os
 import string
 import re
+from nltk.corpus import stopwords
 
 ## find all .txt files
 def getFiles():
 	docs  = []
 	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor"):
 		for files in f:
-			if files.endswith(".txt"):
+			if files.endswith(".txt") and files.startswith("tweet_"):
 				docs.append(files)
 	return docs
 
@@ -50,7 +51,9 @@ def run():
 	tokens = getDict(tweets)
 	x = [item for item in list(set(tokens)) if not item.startswith("http")]
 	x = [re.sub(r'[^\w\s]', '', item) for item in x]
-	with open("documents.class", "w") as f:
+	stop = set(stopwords.words("english"))
+	x = [w for w in x if not w in stop]
+	with open("documents.txt", "w") as f:
 		for each in x:
 			f.write(each + ",")
 run()

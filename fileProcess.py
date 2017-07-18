@@ -9,7 +9,7 @@ class fileProcess:
  		self.access_secret = 'cJKQWdJGVsib56vkGL18hO20x4KX5U56TEuHrmtYIWTJA'
  		## selected account for testing
  		self.user = ["katyperry", "ConanOBrien", "Oprah", "jimmyfallon", "EmmaWatson", "LeoDiCaprio", "BillGates", "taylorswift13", "rihanna"]
- 		self.comm = ["Padilla_Comm", "MayoClinic", "Twitter", "TheEconomist", "Google", "nytimes"]
+ 		self.comm = ["Padilla_Comm", "MayoClinic", "TheEconomist", "Google", "nytimes"]
  	def getAPI(self):
  		try: 
  			auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)

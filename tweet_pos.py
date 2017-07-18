@@ -1,16 +1,16 @@
 ## import ppackages
 import nltk
 import os
-import numpy
-import sklearn
-from sklearn.feature_extraction import DictVectorizer
+import string
+import re
+
 
 ## find all .txt files
 def getFiles():
 	docs  = []
 	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor"):
 		for files in f:
-			if files.endswith(".txt"):
+			if files.endswith(".txt") and files.startswith("tweet"):
 				docs.append(files)
 	return docs
 
@@ -21,7 +21,10 @@ def readFile(fileName):
 	tweets = []
 	with open(fileName, 'r') as f:
 		for row in f:
-			tweets.append(row.rsplit("\n")[0].lower())
+			## remove RT, @ and url
+			row = re.sub(r"(?:@\S*|#\S*|http(?=.*://)\S*)", "", row.rsplit("\n")[0].lower())
+			row = row.replace("rt", "")
+			tweets.append(row)
 	return tweets
 
 ## get training dataset for each account
@@ -53,20 +56,29 @@ def getTest(level, docs):
 		row = row[:-4]
 		test[row] = test_set
 	return test
-## tag all words in .class file
+## remove stop word in the documents file
 # input: .class file that contains all words
-# output: a list contain pos of words
-def getPOS(fileName):
+def get(fileName):
 	words = []
-	with open(fileName, 'r') as f:
+	with open(fileName, "r") as f:
 		for row in f:
 			words.extend(row.split(","))
 	## remove empty string
 	words = filter(None, words)
-	return nltk.pos_tag(words)
+	return words
 
+## remove all http, rt, @ things in a tweet
+# input: a dict, with key as username, values as a list of tweets
+# output: a dict, with key as username, values as a list of cleaned tweets
+#def clean(docum):
+
+
+## test run
 def run():
 	docs = getFiles()
 	train = getTrain(0.7, docs)
-	test = getTest(0.7, doce)
-	words = getPOS("documents.class")
+	print train
+	print train
+	test = getTest(0.7, docs)
+	words = get("documents.txt")
+run()
