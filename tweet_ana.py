@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 ## find all .txt files
 def getFiles():
 	docs  = []
-	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor"):
+	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor/data"):
 		for files in f:
 			if files.endswith(".txt") and files.startswith("tweet_"):
 				docs.append(files)
@@ -21,6 +21,9 @@ def readFile(fileName):
 	tweets = []
 	with open(fileName, 'r') as f:
 		for row in f:
+			## remove RT, @ and url
+			row = re.sub(r"(?:@\S*|#\S*|http(?=.*://)\S*)", "", row.rsplit("\n")[0].lower())
+			row = row.replace("rt", "")
 			tweets.append(row.rsplit("\n")[0].lower())
 	return tweets
 ## get list for all users' tweet
