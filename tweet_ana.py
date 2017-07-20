@@ -4,11 +4,12 @@ import os
 import string
 import re
 from nltk.corpus import stopwords
+import csv
 
 ## find all .txt files
 def getFiles():
 	docs  = []
-	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor/data"):
+	for r, d, f in os.walk("/Users/changye.li/Documents/scripts/traitsPredictor/data/"):
 		for files in f:
 			if files.endswith(".txt") and files.startswith("tweet_"):
 				docs.append(files)
@@ -57,6 +58,7 @@ def getFeature():
 			category.add(row.split()[1])
 			temp.append(row.split())
 	features = {}
+	category = list(category)
 	## iterate word in feature file
 	for item in word:
 		feature = [0]*10
@@ -65,17 +67,20 @@ def getFeature():
 			if elem[0] == item:
 				if elem[1] in category:
 					feature[category.index(elem[1])] = int(elem[2])
+		## form a dictionary
 		features[item] = feature
 	## write to file with better format
-	with open("/Users/changye.li/Documents/scripts/traitsPredictor/data/better.txt", "w") as f:
-		
-	return features
+	with open("/Users/changye.li/Documents/scripts/traitsPredictor/data/better.csv", "wb") as f:
+		writer = csv.writer(f)
+		for key, value in features.items():
+			writer.writerow([key, value])
 
 def run():
 	docs = getFiles()
 	tweets = []
+	s = "/Users/changye.li/Documents/scripts/traitsPredictor/data/"
 	for each in docs:
-		tweets.extend(readFile(each))
+		tweets.extend(readFile(s + each))
 	tokens = getDict(tweets)
 	x = [item for item in list(set(tokens)) if not item.startswith("http")]
 	x = [re.sub(r'[^\w\s]', '', item) for item in x]
@@ -85,3 +90,4 @@ def run():
 		for each in x:
 			f.write(each + ",")
 run()
+getFeature()
