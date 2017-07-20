@@ -55,7 +55,7 @@ class fileProcess:
  				last = total[-1].id - 1
  			result = [emoji_pattern.sub(r'', tweet.text).encode('utf-8') for tweet in total]
  			## write tweets to file
- 			s = "tweet_" + each + ".txt"
+ 			s = "/Users/changye.li/Documents/scripts/traitsPredictor/data" + "tweet_" + each + ".txt"
  			with open(s, "w") as f:
  				for item in result:
  					f.write(item + "\n")
