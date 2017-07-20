@@ -46,6 +46,31 @@ def getDict(tweet):
 	tokens = filter(None, tokens)
 	return tokens
 
+def getFeature():
+	word = set()
+	category = set()
+	temp = []
+	## read feature file
+	with open("/Users/changye.li/Documents/scripts/traitsPredictor/data/NRC.txt", "r") as f:
+		for row in f:
+			word.add(row.split()[0])
+			category.add(row.split()[1])
+			temp.append(row.split())
+	features = {}
+	## iterate word in feature file
+	for item in word:
+		feature = [0]*10
+		## iterate each row in feature file
+		for elem in temp:
+			if elem[0] == item:
+				if elem[1] in category:
+					feature[category.index(elem[1])] = int(elem[2])
+		features[item] = feature
+	## write to file with better format
+	with open("/Users/changye.li/Documents/scripts/traitsPredictor/data/better.txt", "w") as f:
+		
+	return features
+
 def run():
 	docs = getFiles()
 	tweets = []
