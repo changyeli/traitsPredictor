@@ -3,10 +3,10 @@ This is a Python traits predictor
 
 ## Features
 - Predicting users' personality traits.
-- Predicting user's favorability on pre-defined subject/topics.
+
 ### Documents
 - ```fileProcess.py```: pulling data from twitter given some test usernames.
-- ```tweet_ana.py```: sentiment analysis for sample user's tweet.
+- ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
 
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
