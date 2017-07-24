@@ -1,6 +1,9 @@
 ## import ppackages
 import os
 import re
+import csv
+from operator import add
+import nltk
 ## find all .txt files
 def getFiles():
 	docs  = []
@@ -12,7 +15,7 @@ def getFiles():
 
 ## read file
 # input: file name ends with .txt
-# output: dict, with usename as key, all tweets as values
+# output: list with all tweets from this user
 def readFile(fileName):
 	tweets = []
 	path = "/Users/changye.li/Documents/scripts/traitsPredictor/data/"
@@ -24,12 +27,34 @@ def readFile(fileName):
 			tweets.append(row)
 	return tweets
 
+## read better-structured feature file
+def readFeature():
+	feature = {}
+	with open("/Users/changye.li/Documents/scripts/traitsPredictor/data/better.csv", "rb") as f:
+		reader = csv.reader(f)
+		feature = dict(reader)
+	return feature
+## get featured word list
+
+## get feature couting on each tweet
+# input: single user tweet
+# input: better-format features, witout
+# output: dict, which username as key, feature count as value
+def getFeature(tweet, feature):
+	chars = []
+	## break all tweets into single word
+	for each in tweet:
+		chars.extend(nltk.word_tokenize(each))
+		## remove words that not appear in feature
+		chars = [w for w in chars if w in fea]
 
 ## test run
 def run():
 	docs = getFiles()
 	words = {}
+	feature = readFeature()
 	for each in docs:
 		words[each] = readFile(each)
+	
 run()
 
