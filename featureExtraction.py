@@ -8,9 +8,11 @@ class featureExtraction:
 	def __init__(self):
 		self.feature = {} ## better format of feature vocabulary
 		self.userFeature = {} ## user word feature
+		self.attr = [] ## the word list from feature, with order
 		self.root = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
 		self.better = "better.csv" ## better format feature
 		self.nrc = "/Users/changye.li/Documents/scripts/traitsPredictor/data/NRC.txt" ## feature vocabulary
+		self.docs = [] ## document filenames for character-seperate file
 	## feature vector with better format
 	def getFeature(self):
 		word = set()
@@ -33,19 +35,29 @@ class featureExtraction:
 					if elem[1] in category:
 						feature[category.index(elem[1])] = int(elem[2])
 			## form a dictionary
-			features[item] = feature
+			self.features[item] = feature
+			self.attr.append(item)
 		## write to file with better format
 		with open(self.root + self.better, "wb") as f:
 			writer = csv.writer(f)
 			for key, value in features.items():
 				writer.writerow([key, value])
-	## read better format feature file
-	def readFeature(self):
-		with open(self.root + self.better, "rb") as f:
-			reader = csv.reader(f)
-			self.feature = dict(reader)
+	## read character files
+	def readFiles(self):
+		for r, d, f in os.walk(self.root):
+			for files in f:
+				if files.endswith(".txt"):
+					self.docs.append(files)
+	## read files from readFiles() first
+	## extract user features based on better-formatted feature vocabulary
+	def extract(self):
+		## read files
+		for each in self.docs:
+			char = []
+			with open(each, "r") as f:
+				char.extend()
+
+## main function
 x = featureExtraction()
 x.getFeature()
 x.readFeature()
-for k,v in x.feature.items():
-	print k, v
