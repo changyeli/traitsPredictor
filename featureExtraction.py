@@ -13,21 +13,21 @@ class featureExtraction:
 		self.better = "better.csv" ## better format feature
 		self.nrc = "/Users/changye.li/Documents/scripts/traitsPredictor/data/NRC.txt" ## feature vocabulary
 		self.docs = [] ## document filenames for character-seperate file
+		self.words = set()
 	## feature vector with better format
 	def getFeature(self):
-		word = set()
 		category = set()
 		temp = []
 		## read feature file
 		with open(self.nrc, "r") as f:
 			for row in f:
-				word.add(row.split()[0])
+				self.words.add(row.split()[0])
 				category.add(row.split()[1])
 				temp.append(row.split())
 		features = {}
 		category = list(category)
 		## iterate word in feature file
-		for item in word:
+		for item in self.words:
 			feature = [0]*10
 			## iterate each row in feature file
 			for elem in temp:
@@ -35,29 +35,29 @@ class featureExtraction:
 					if elem[1] in category:
 						feature[category.index(elem[1])] = int(elem[2])
 			## form a dictionary
-			self.features[item] = feature
-			self.attr.append(item)
-		## write to file with better format
-		with open(self.root + self.better, "wb") as f:
+			self.feature[item] = feature
+			self.attr = category
+		with open(self.root +self.better, "w") as f:
 			writer = csv.writer(f)
-			for key, value in features.items():
-				writer.writerow([key, value])
+			for k, v in self.feature.iteritems():
+				writer.writerow([k] + v)
 	## read character files
 	def readFiles(self):
 		for r, d, f in os.walk(self.root):
 			for files in f:
 				if files.endswith(".txt"):
 					self.docs.append(files)
-	## read files from readFiles() first
-	## extract user features based on better-formatted feature vocabulary
-	def extract(self):
-		## read files
+	## extract user feature based on better-formatted feature vocabulary
+	def extractFeature(self):
 		for each in self.docs:
-			char = []
-			with open(each, "r") as f:
-				char.extend()
-
+			with open(self.root + each, "r") as f:
+				s = each[:-4]
+				## all words
+				row = f.readline().split(",")
+				for item in row:
+					if item in self.words:
+						print "yes"
 ## main function
 x = featureExtraction()
+x.readFiles()
 x.getFeature()
-x.readFeature()
