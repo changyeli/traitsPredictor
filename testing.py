@@ -16,6 +16,12 @@ with open("/Users/changye.li/Documents/scripts/traitsPredictor/process/BillGates
 			else:
 				test[item] = [mydict[item]]
 for k, v in test.items():
+	v = [sum(x) for x in zip(*v)]
 	print k, v
+
+with open(self.root +self.better, "w") as f:
+			writer = csv.writer(f)
+			for k, v in self.feature.iteritems():
+				writer.writerow([k] + v)
 
 	
