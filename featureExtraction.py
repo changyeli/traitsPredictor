@@ -1,20 +1,19 @@
 ## import packages
 import os
 import csv
-from operator import add ## for list-wise element addition
-import nltk
 ## class and functions
 class featureExtraction:
 	def __init__(self):
 		self.feature = {} ## better format of feature vocabulary
 		self.userFeature = {} ## user word feature, with word as key, attributes as value
-		self.attr = [] ## the word list from feature, with order
+		self.attr = [] ## the word category list from feature, with order
 		self.root = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
 		self.better = "better.csv" ## better format feature
 		self.nrc = "/Users/changye.li/Documents/scripts/traitsPredictor/data/NRC.txt" ## feature vocabulary file
 		self.docs = [] ## document filenames for character-seperate file
 		self.words = set() ## feature vocabulary
-		self.allDocs = {} ## 
+		self.allDocs = {} ## cleaned feature
+		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
 	## feature vector with better format
 	def getFeature(self):
 		category = set()
@@ -38,7 +37,10 @@ class featureExtraction:
 			## form a dictionary
 			self.feature[item] = feature
 			self.attr = category
-		
+		with open(self.root +self.better, "w") as f:
+			writer = csv.writer(f)
+			for k, v in self.feature.iteritems():
+				writer.writerow([k] + v)
 	## read character files
 	def readFiles(self):
 		for r, d, f in os.walk(self.root):
@@ -61,10 +63,14 @@ class featureExtraction:
 						else:
 							self.userFeature[item] = [self.feature[item]]
 				## integrate attributes
+				values = []
 				for k, v in self.userFeature.iteritems():
 					v = [sum(x) for x in zip(*v)]
-					print v
-				self.allDocs[s] = self.userFeature
+					values.append(v)
+				self.allDocs[s] = values
+	## write processed feature to file
+	def writeFile(self):
+		for 
 ## main function
 x = featureExtraction()
 x.readFiles()
