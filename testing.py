@@ -6,3 +6,6 @@ with open(self.root +self.better, "w") as f:
 			writer = csv.writer(f)
 			for k, v in self.feature.iteritems():
 				writer.writerow([k] + v)
+with open('dict.csv', 'rb') as csv_file:
+    reader = csv.reader(csv_file)
+    mydict = dict(reader)
