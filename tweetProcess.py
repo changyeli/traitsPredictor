@@ -3,7 +3,6 @@ import os
 import re
 import csv
 import string
-from operator import add ## for list-wise element addition
 import nltk
 from nltk.corpus import stopwords
 
