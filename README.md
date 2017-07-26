@@ -7,6 +7,7 @@ This is a Python traits predictor
 ### Documents
 - ```fileProcess.py```: pulling data from twitter given some test usernames.
 - ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
+- ```featureExtraction.py```: feature extraction and I/O to better format.
 
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
