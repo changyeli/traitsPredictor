@@ -71,7 +71,7 @@ class featureExtraction:
 	## write processed feature to file
 	def writeFile(self):
 		for k, v in self.allDocs.items():
-			with open(self.path + k + ".txt", "wb") as f:
+			with open(self.path + k + ".csv", "wb") as f:
 				w = csv.writer(f)
 				for item in v:
 					w.writerow(item)
