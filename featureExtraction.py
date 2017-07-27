@@ -37,6 +37,7 @@ class featureExtraction:
 			## form a dictionary
 			self.feature[item] = feature
 			self.attr = category
+		print self.attr
 		with open(self.root +self.better, "w") as f:
 			writer = csv.writer(f)
 			for k, v in self.feature.iteritems():
