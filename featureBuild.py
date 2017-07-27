@@ -22,10 +22,10 @@ class featureBuild:
 			path = self.root + each
 			## read file to data frame
 			df = pd.read_csv(path, delimiter = ",")
+			print "before reduce: ", df.shape
 			## remove rows with all zeros
 			df = df[(df.T != 0).any()]
-			self.allData.append(df)
+			print "after reduce: ", df.shape
 x = featureBuild()
 x.readFile()
 x.scanData()
-print x.allData
