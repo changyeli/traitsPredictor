@@ -1,7 +1,5 @@
 # Traits Predictor
 
-s
-
 ## Brief Introduction
 
 This is a simple Python personality predictor. Basically, it will cluster all users with Big Five test style, and try to group users by the same trait.
