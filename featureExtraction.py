@@ -69,6 +69,7 @@ class featureExtraction:
 					v = [sum(x) for x in zip(*v)]
 					values.append(v)
 				self.allDocs[s] = values
+		print len(set(x))
 	## write processed feature to file
 	def writeFile(self):
 		for k, v in self.allDocs.items():
