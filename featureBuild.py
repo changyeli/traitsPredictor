@@ -26,7 +26,7 @@ class featureBuild:
 			## read file to data frame
 			df = pd.read_csv(path, delimiter = ",", names = self.attr)
 			## remove rows with all zeros
-			#df = df[(df.T != 0).any()]
+			df = df[(df.T != 0).any()]
 			self.allData = self.allData.append(df)
 	## create k-means for full matrix
 	## ruduce dimension using PCA, and plot the result of k-means
