@@ -31,3 +31,22 @@ ggplot(data = melt(c1), mapping = aes(x = value)) +
 ## histogram of cluster 2
 ggplot(data = melt(c2), mapping = aes(x = value)) +
   geom_histogram(bins = 10) + facet_wrap(~variable, scales = "free_x")
+
+train = read_csv("~/Documents/scripts/traitsPredictor/mypersonality_final.csv", col_names = TRUE)
+train$cEXT = ifelse(train$cEXT == "y", 1, 0)
+train$cAGR = ifelse(train$cAGR == "y", 1, 0)
+train$cNEU = ifelse(train$cNEU == "y", 1, 0)
+train$cCON = ifelse(train$cCON == "y", 1, 0)
+train$cOPN = ifelse(train$cOPN == "y", 1, 0)
+
+cEXT = subset(train, select = c(STATUS, cEXT))
+cAGR = subset(train, select = c(STATUS, cAGR))
+cNEU = subset(train, select = c(STATUS, cNEU))
+cCON = subset(train, select = c(STATUS, cCON))
+cOPN = subset(train, select = c(STATUS, cOPN))
+
+write_csv(cEXT, "cEXT.csv")
+write_csv(cAGR, "cAGR.csv")
+write_csv(cNEU, "cNEU.csv")
+write_csv(cCON, "cCON.csv")
+write_csv(cOPN, "cOPN.csv")
