@@ -27,6 +27,8 @@ User selection is randomly selected from [here](http://friendorfollow.com/twitte
 - ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
 - ```featureExtraction.py```: feature extraction and I/O to better format.
 - ```featureBuild.py```: classifying users into clusters, using K-means, based on their tweets' feature.
+- ```featureAna.R```: feature analysis.
+- ```trainProcess.py```: training data process
 
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
