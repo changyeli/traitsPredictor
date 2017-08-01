@@ -6,7 +6,11 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 ### Methods
 
-In this project, k-means and unigram are mainly used. 
+- Unigram
+- K-means
+- Multiple layer perceptron
+- Support Vector Machines
+
 
 ### Features
 - Predicting users' personality traits.
@@ -16,13 +20,7 @@ In this project, k-means and unigram are mainly used.
 
 User selection is randomly selected from [here](http://friendorfollow.com/twitter/most-followers/), and the word feature data is collected from [here](https://github.com/mhbashari/NRC-Persian-Lexicon).
 
-### Limitation
 
-Since only raw data (users' tweets) is analyzed, and there is no valid Big Five test results for these users, so it's impossible to get label data and quantized score for each trait. Therefore, the only feasible solution is k-means and there is no way to evaluate the performance, except PCA. However, PCA dimension reduction will lose certain amount of information, so human-interpretation would have to take some loss, which may decrease the accuracy of evaluation.
-
-Also, at this time, this predictor cannot give an accurate description of each trait for every user due to reasons metioned above. So, this preditor can only report like "user A is more positive than user B, since user A used more postive words, such as xxx, xxx, xxx, than user B". 
-
-Any ideas of improvement are welcome!
 
 ### Files
 - ```fileProcess.py```: pulling data from twitter given some test usernames.
