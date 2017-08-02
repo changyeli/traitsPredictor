@@ -1,10 +1,12 @@
 ## import packages
 import os
-import sklearn
 import pandas as pd 
 import nltk
 import string
 from nltk.corpus import stopwords
+from sklearn.neural_network import MLPClassifier
+from sklearn import svm
+import numpy as np 
 class trainProcess:
 	def __init__(self):
 		self.total = pd.DataFrame()
@@ -23,6 +25,7 @@ class trainProcess:
 			for files in f:
 				if files.endswith(".csv"):
 					self.docs.append(files)
+		## with column name
 		self.better = pd.read_csv(self.path, names = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust'])
 		self.words = list(self.better["voculabury"])
 		self.vocal = self.better.set_index("voculabury").T.to_dict("list")
@@ -44,19 +47,29 @@ class trainProcess:
 	## reformat data into matrix layout, each status is a 10-dimensional vector, with adding each word's attribute to corresponding column
 	# input: pre-processed tokenized words (list of lists) from processData function
 	def getAttr(self, values):
+		temp = [] ## temporary data storage
 		## every status update
 		for each in values:
-			## feature vector
-			attr = [0] *10
+			attr = [0] *10 ## feature vector
 			## empty list
 			if len(each) == 0:
-				self.matrix.append(attr)
+				temp.append(attr)
 			else:
 				## each word in a status update:
 				for item in each:
 					attr = [x + y for x, y in zip(attr, self.vocal[item])]
-				self.matrix.append(attr)
-		print self.matrix
+				temp.append(attr)
+		## normalize matrix, follow central limit theroem
+		temp = np.matrix(temp)
+		temp = (temp - np.mean(temp))/temp.var()
+		self.matrix = temp.tolist()
+	## get training and test data, 80% of data as training data, and the rest as test data
+	def sliceData(self):
+		sample = int(len(self.matrix)* 0.8)
+		self.train = self.matrix[:sample]
+		self.test = self.matrix[sample:]
+	## MLP training
+	#def MLPtrain(self):
 
 
 ## test
@@ -64,3 +77,4 @@ x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
+x.sliceData()
