@@ -14,6 +14,8 @@ class trainProcess:
 		self.docs = []
 		self.better = pd.DataFrame()
 		self.words = [] ## word to be analyzed
+		self.train = [] ## training data
+		self.test = [] ## test data
 	## read all .csv file
 	def readFiles(self):
 		for r, d ,f in os.walk(self.root):
@@ -22,15 +24,19 @@ class trainProcess:
 					self.docs.append(files)
 		self.better = pd.read_csv(self.path, header = None)
 		self.words = list(self.better[0])
-	## scan and analyze data by traits
-	def processAGR(self):
+	## scan and process full dataset
+	def processData(self):
 		data = pd.read_csv(self.root + "cAGR.csv")
 		status = list(data["STATUS"])
 		stop = set(stopwords.words("english"))
 		tokens = []
 		for each in status:
-			temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation)) if not w in stop]
-			tokens.append(temp)
+			## tokenize each status, remove all punctuations and lower the words
+			temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower()) if not w in stop]
+			## only keep the words that appear in the NRC list
+			x = [w for w in temp if w in self.words]
+			tokens.append(x)
+			## treat all empty lists as zeros
 		print tokens
 
 ## test
