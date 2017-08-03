@@ -65,26 +65,32 @@ class trainProcess:
 		temp = np.matrix(temp)
 		temp = (temp - np.mean(temp))/temp.var()
 		self.matrix = temp
-	## get training and test data, 80% of data as training data, and the rest as test data
-	def sliceData(self):
-		sample = int(len(self.matrix)* 0.8)
+		with open("normalized.txt", "w") as f:
+			for line in self.matrix:
+				np.savetxt(f, line, fmt = "%.2f")
+	## process AGR data
+	def AGR(self, per):
+		sample = int(len(self.matrix)* per)
 		self.train = self.matrix[:sample]
 		self.test = self.matrix[sample:]
-	## MLP training for AGR
-	def MLPtrain_AGR(self):
+		#####################################
+		# MLP
 		## take label column and reformat to list
-		labels = pd.read_csv(self.root + "cAGR.csv", usecols = [1]).values.tolist()
+		labels = pd.read_csv(self.root + "cAGR.csv", usecols = [1])
 		## slice training and test labels
-		sample = int(len(self.matrix) *0.8)
+		sample = int(len(self.matrix) * per)
 		labelTrain = labels[:sample]
 		labelTest = labels[sample:]
-		self.train[:, 11] = labelTrain
-		print self.train
+		clf = MLPClassifier(activation = "tanh", solver = "adam", alpha = 0.00001, max_iter = 20000000, hidden_layer_sizes = (90000, ))
+		clf.fit(self.train, labelTrain.values.ravel())
+		labelPredict = clf.predict(self.test)
+		## find the correct predictions
+		rate = [i for i, j in zip(labelPredict, labelTest.as_matrix()) if i == j]
+		print float(len(rate))/float(len(labelPredict))
 
 ## test
 x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-x.sliceData()
-x.MLPtrain_AGR()
+#x.AGR(0.9)
