@@ -61,13 +61,10 @@ class trainProcess:
 				for item in each:
 					attr = [x + y for x, y in zip(attr, self.vocal[item])]
 				temp.append(attr)
-		## normalize matrix, follow central limit theroem
+		## normalize matrix
 		temp = np.matrix(temp)
-		temp = (temp - np.mean(temp))/temp.var()
+		temp = np.divide((temp - np.mean(temp)), 15.)
 		self.matrix = temp
-		with open("normalized.txt", "w") as f:
-			for line in self.matrix:
-				np.savetxt(f, line, fmt = "%.2f")
 	## process AGR data
 	def AGR(self, per):
 		sample = int(len(self.matrix)* per)
@@ -81,16 +78,16 @@ class trainProcess:
 		sample = int(len(self.matrix) * per)
 		labelTrain = labels[:sample]
 		labelTest = labels[sample:]
-		clf = MLPClassifier(activation = "tanh", solver = "adam", alpha = 0.00001, max_iter = 20000000, hidden_layer_sizes = (90000, ))
+		clf = MLPClassifier(activation = "logistic", solver = "adam", alpha = 0.001, max_iter = 200000, hidden_layer_sizes = (50000, ))
 		clf.fit(self.train, labelTrain.values.ravel())
 		labelPredict = clf.predict(self.test)
 		## find the correct predictions
 		rate = [i for i, j in zip(labelPredict, labelTest.as_matrix()) if i == j]
-		print float(len(rate))/float(len(labelPredict))
+		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
 
 ## test
 x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-#x.AGR(0.9)
+x.AGR(0.9)
