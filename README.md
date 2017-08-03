@@ -7,7 +7,7 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 ### Methods
 
 - Unigram
-- Multiple Layer Perceptron: best correct rate is 0.48286.
+- Multiple Layer Perceptron: best correct rate is 0.54.
 - Support Vector Machines
 - K-Nearest Neighbors
 
