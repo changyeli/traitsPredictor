@@ -7,10 +7,9 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 ### Methods
 
 - Unigram
-- K-means
-- Multiple layer perceptron
+- Multiple Layer Perceptron: best correct rate is 0.48286.
 - Support Vector Machines
-- Nearest Neighbors
+- K-Nearest Neighbors
 
 ### Features
 - Predicting users' personality traits.
@@ -18,7 +17,7 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 ### Data
 
-User selection is randomly selected from [here](http://friendorfollow.com/twitter/most-followers/), and the word feature data is collected from [here](https://github.com/mhbashari/NRC-Persian-Lexicon). For the training data, is collected from [here](http://mypersonality.org/wiki/doku.php?id=download_databases)
+User selection is randomly selected from [here](http://friendorfollow.com/twitter/most-followers/), and the word feature data is collected from [here](https://github.com/mhbashari/NRC-Persian-Lexicon). For the training data, is collected from [here](http://mypersonality.org/wiki/doku.php?id=download_databases).
 
 
 
