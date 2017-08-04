@@ -7,9 +7,20 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 ### Methods
 
 - Unigram
-- Multiple Layer Perceptron: best correct rate is 0.54.
-- Support Vector Machines: best correct rate is 0.548
-- Bernoulli Naive Bayes: best correct rate is 0.5.
+- Multiple Layer Perceptron
+- Support Vector Machines
+- Bernoulli Naive Bayes
+- K Nearest Neighbors
+
+### Model Selection
+
+For each trait, model with the highest correct rate will be selected.
+
+- Openness: MLP or Bernoulli Naive Bayes, with correct rate 74%
+- Conscientiousness: MLP or Bernoulli Naive Bayes, with correct rate 56%
+- Extroversion: MLP with correct rate 57.86%
+- Agreeableness: MLP with correct rate 57.4%
+- Neuroticism: MLP or Bernoulli Naive Bayes, with correct rate 62.5%
 
 ### Features
 - Predicting users' personality traits.
