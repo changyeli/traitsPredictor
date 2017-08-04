@@ -18,8 +18,6 @@ class trainProcess:
 		self.better = pd.DataFrame() ## to store data
 		self.vocal = {} ## reformat dataframe to dict, voculabury as key, attributes as values
 		self.words = [] ## word to be analyzed
-		self.train = [] ## training data
-		self.test = [] ## test data
 		self.matrix = [] ## normalized matrix layout for training data
 	## read all .csv file
 	# output: tokenized word for each status update
@@ -64,48 +62,48 @@ class trainProcess:
 					attr = [x + y for x, y in zip(attr, self.vocal[item])]
 				temp.append(attr)
 		## normalize matrix
-		temp = np.matrix(temp)
+		temp = pd.DataFrame(temp)
 		temp = np.divide((temp - np.mean(temp)), 15.)
 		self.matrix = temp
-	## process AGR data
-	def AGR(self, per):
-		sample = int(len(self.matrix)* per)
-		self.train = self.matrix[:sample]
-		self.test = self.matrix[sample:]
-		sample = int(len(self.matrix) * per)
+	## train models
+	def trainModel(self, filename, per):
+		train = self.matrix.sample(frac = per, replace = False)
+		print train
+		test = self.matrix.values.tolist().remove(train)
 		#####################################
 		# MLP
 		## take label column and reformat to list
-		labels = pd.read_csv(self.root + "cAGR.csv", usecols = [1])
+		labels = pd.read_csv(self.root + filename, usecols = [1])
 		## slice training and test labels
 		labelTrain = labels[:sample]
 		labelTest = labels[sample:]
 		## may overfit
 		clf = MLPClassifier(activation = "logistic", solver = "adam", 
 			alpha = 0.001, max_iter = 900000, hidden_layer_sizes = (150000, ))
-		clf.fit(self.train, labelTrain.values.ravel())
-		labelPredict = clf.predict(self.test)
+		clf.fit(train, labelTrain.values.ravel())
+		labelPredict = clf.predict(test)
 		## find the correct predictions
 		rate = [i for i, j in zip(labelPredict, labelTest.as_matrix()) if i == j]
 		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
 		#######################################
 		# SVM
 		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		clf1.fit(self.train, labelTrain.values.ravel())
-		labelPredict1 = clf1.predict(self.test)
+		clf1.fit(train, labelTrain.values.ravel())
+		labelPredict1 = clf1.predict(test)
 		rate1 = [i for i, j in zip(labelPredict1, labelTest.as_matrix()) if i == j]
 		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
-		clf2.fit(self.train, labelTrain)
-		labelPredict2 = clf2.predict(self.test)
+		clf2.fit(train, labelTrain)
+		labelPredict2 = clf2.predict(test)
 		rate2 = [i for i, j in zip(labelPredict2, labelTest.as_matrix()) if i == j]
 		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
 		###########################################
+		# KNN
 		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		clf3.fit(self.train, labelTrain)
-		labelPredict3 = clf3.predict(self.test)
+		clf3.fit(train, labelTrain)
+		labelPredict3 = clf3.predict(test)
 		rate3 = [i for i, j in zip(labelPredict3, labelTest.as_matrix()) if i == j]
 		print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
 
@@ -114,4 +112,6 @@ x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-x.AGR(0.9)
+for f in x.docs:
+	print "processing ", f
+	x.trainModel(f, 0.9)
