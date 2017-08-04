@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 from sklearn.neural_network import MLPClassifier
 from sklearn import svm
 from sklearn.naive_bayes import BernoulliNB
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -19,7 +20,7 @@ class trainProcess:
 		self.words = [] ## word to be analyzed
 		self.train = [] ## training data
 		self.test = [] ## test data
-		self.matrix = [] ## matrix layout for training data
+		self.matrix = [] ## normalized matrix layout for training data
 	## read all .csv file
 	# output: tokenized word for each status update
 	def readFiles(self):
@@ -66,8 +67,6 @@ class trainProcess:
 		temp = np.matrix(temp)
 		temp = np.divide((temp - np.mean(temp)), 15.)
 		self.matrix = temp
-		
-		return 
 	## process AGR data
 	def AGR(self, per):
 		sample = int(len(self.matrix)* per)
@@ -97,12 +96,18 @@ class trainProcess:
 		rate1 = [i for i, j in zip(labelPredict1, labelTest.as_matrix()) if i == j]
 		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
 		###########################################
-		# naive bayes
+		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
 		clf2.fit(self.train, labelTrain)
 		labelPredict2 = clf2.predict(self.test)
 		rate2 = [i for i, j in zip(labelPredict2, labelTest.as_matrix()) if i == j]
 		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
+		###########################################
+		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
+		clf3.fit(self.train, labelTrain)
+		labelPredict3 = clf3.predict(self.test)
+		rate3 = [i for i, j in zip(labelPredict3, labelTest.as_matrix()) if i == j]
+		print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
 
 ## test
 x = trainProcess()
