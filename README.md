@@ -8,8 +8,8 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 - Unigram
 - Multiple Layer Perceptron: best correct rate is 0.54.
-- Support Vector Machines
-- K-Nearest Neighbors
+- Support Vector Machines: best correct rate is 0.548
+- Bernoulli Naive Bayes: best correct rate is 0.5.
 
 ### Features
 - Predicting users' personality traits.
