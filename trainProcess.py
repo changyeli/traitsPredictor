@@ -65,17 +65,19 @@ class trainProcess:
 		temp = np.matrix(temp)
 		temp = np.divide((temp - np.mean(temp)), 15.)
 		self.matrix = temp
+		
+		return 
 	## process AGR data
 	def AGR(self, per):
 		sample = int(len(self.matrix)* per)
 		self.train = self.matrix[:sample]
 		self.test = self.matrix[sample:]
+		sample = int(len(self.matrix) * per)
 		#####################################
 		# MLP
 		## take label column and reformat to list
 		labels = pd.read_csv(self.root + "cAGR.csv", usecols = [1])
 		## slice training and test labels
-		sample = int(len(self.matrix) * per)
 		labelTrain = labels[:sample]
 		labelTest = labels[sample:]
 		clf = MLPClassifier(activation = "logistic", solver = "adam", alpha = 0.001, max_iter = 200000, hidden_layer_sizes = (50000, ))
@@ -84,6 +86,13 @@ class trainProcess:
 		## find the correct predictions
 		rate = [i for i, j in zip(labelPredict, labelTest.as_matrix()) if i == j]
 		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
+		#######################################
+		# SVM
+		clf1 = svm.NuSVC(kernel = "sigmoid")
+		clf1.fit(self.train, labelTrain.values.ravel())
+		labelPredict1 = clf1.predict(self.test)
+		rate1 = [i for i, j in zip(labelPredict1, labelTest.as_matrix()) if i == j]
+		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
 
 ## test
 x = trainProcess()
