@@ -6,6 +6,7 @@ import string
 from nltk.corpus import stopwords
 from sklearn.neural_network import MLPClassifier
 from sklearn import svm
+from sklearn.naive_bayes import BernoulliNB
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -80,7 +81,9 @@ class trainProcess:
 		## slice training and test labels
 		labelTrain = labels[:sample]
 		labelTest = labels[sample:]
-		clf = MLPClassifier(activation = "logistic", solver = "adam", alpha = 0.001, max_iter = 200000, hidden_layer_sizes = (50000, ))
+		## may overfit
+		clf = MLPClassifier(activation = "logistic", solver = "adam", 
+			alpha = 0.001, max_iter = 900000, hidden_layer_sizes = (150000, ))
 		clf.fit(self.train, labelTrain.values.ravel())
 		labelPredict = clf.predict(self.test)
 		## find the correct predictions
@@ -88,11 +91,18 @@ class trainProcess:
 		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
 		#######################################
 		# SVM
-		clf1 = svm.NuSVC(kernel = "sigmoid")
+		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
 		clf1.fit(self.train, labelTrain.values.ravel())
 		labelPredict1 = clf1.predict(self.test)
 		rate1 = [i for i, j in zip(labelPredict1, labelTest.as_matrix()) if i == j]
 		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
+		###########################################
+		# naive bayes
+		clf2 = BernoulliNB()
+		clf2.fit(self.train, labelTrain)
+		labelPredict2 = clf2.predict(self.test)
+		rate2 = [i for i, j in zip(labelPredict2, labelTest.as_matrix()) if i == j]
+		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
 
 ## test
 x = trainProcess()
