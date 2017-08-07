@@ -70,8 +70,8 @@ class trainRegression:
 			process.append([sum(x) for x in zip(*temp)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
 			## reformat into new and processed dataframe
 			self.processed = pd.DataFrame(process, columns = self.attr[1:] + self.values)
+			#self.processed.to_csv("processed_data.csv")
 ## test
 x = trainRegression()
 x.readFiles()
 x.process()
-print x.processed
