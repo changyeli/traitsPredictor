@@ -19,6 +19,10 @@ class trainProcess:
 		self.vocal = {} ## reformat dataframe to dict, voculabury as key, attributes as values
 		self.words = [] ## word to be analyzed
 		self.matrix = [] ## normalized matrix layout for training data
+		self.SVM = []
+		self.MLP = []
+		self.NB = []
+		self.KNN = []
 	## read all .csv file
 	# output: tokenized word for each status update
 	def readFiles(self):
@@ -87,6 +91,7 @@ class trainProcess:
 		## find the correct predictions
 		rate = [i for i, j in zip(labelPredict, labelTest) if i == j]
 		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
+		self.MLP.append(float(len(rate))/float(len(labelPredict)))
 		#######################################
 		# SVM
 		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
@@ -94,6 +99,7 @@ class trainProcess:
 		labelPredict1 = clf1.predict(test)
 		rate1 = [i for i, j in zip(labelPredict1, labelTest) if i == j]
 		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
+		self.SVM.append(float(len(rate1))/float(len(labelPredict1)))
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
@@ -101,6 +107,7 @@ class trainProcess:
 		labelPredict2 = clf2.predict(test)
 		rate2 = [i for i, j in zip(labelPredict2, labelTest) if i == j]
 		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
+		self.NB.append(float(len(rate2))/float(len(labelPredict2)))
 		###########################################
 		# KNN
 		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
@@ -108,6 +115,7 @@ class trainProcess:
 		labelPredict3 = clf3.predict(test)
 		rate3 = [i for i, j in zip(labelPredict3, labelTest) if i == j]
 		print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
+		self.KNN.append(float(len(rate2))/float(len(labelPredict2)))
 		
 
 ## test
@@ -115,6 +123,13 @@ x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-for f in x.docs:
-	print "processing ", f
-	x.trainModel(f, 0.9)
+for i in range(100):
+	print "This is ", i, "iteration."
+	for f in x.docs:
+		print "processing ", f
+		x.trainModel(f, 0.9)
+
+print "MLP average correct rate: ", sum(x.MLP)/len(x.MLP)
+print "SVM average correct rate: ", sum(x.SVM)/len(x.SVM)
+print "NB average correct rate: ", sum(x.NB)/len(x.NB)
+print "KNN average correct rate:", sum(x.KNN)/len(x.KNN)
