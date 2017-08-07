@@ -38,12 +38,12 @@ class trainProcess:
 	def processData(self):
 		data = pd.read_csv(self.root + "cAGR.csv")
 		status = list(data["STATUS"])
-		stop = set(stopwords.words("english"))
 		tokens = []
+		stop = set(stopwords.words("english"))
 		## predined column names
 		for each in status:
 			## tokenize each status, remove all punctuations, stopwords and lower the words
-			temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower()) if not w in stop]
+			temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower())if not w in stop]
 			## only keep the words that appear in the NRC list
 			x = [w for w in temp if w in self.words]
 			tokens.append(x)
@@ -123,7 +123,7 @@ x = trainProcess()
 x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-for i in range(100):
+for i in range(10):
 	print "This is ", i, "iteration."
 	for f in x.docs:
 		print "processing ", f
