@@ -38,7 +38,7 @@ User selection is randomly selected from [here](http://friendorfollow.com/twitte
 - ```featureExtraction.py```: feature extraction and I/O to better format.
 - ```featureBuild.py```: classifying users into clusters, using K-means, based on their tweets' feature.
 - ```featureAna.R```: feature analysis.
-- ```trainProcess.py```: training data process, using Machine Learning techniques.
+- ```trainProcess.py```: training data process, using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 - ```trainRegression.py```: training data process, using Multivariate Linear/Generalized Regression techniques. This training process is aimed to predict scores for five traits.
 
 ## Citation
