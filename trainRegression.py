@@ -15,7 +15,7 @@ class trainRegression:
 		self.files = "/Users/changye.li/Documents/scripts/traitsPredictor/mypersonality_final.csv"
 		## data frame that contains all processed status
 		## each entry represents word count of each user
-		self.processed = []
+		self.processed = pd.DataFrame()
 		## vocabulary list in better format, with attributes
 		self.better = pd.DataFrame()
 		## vocabulary list
@@ -23,28 +23,34 @@ class trainRegression:
 		self.dic = {}
 		## all unprocessed data
 		self.data = pd.DataFrame()
+		## attribute name
+		self.attr = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust']
+		self.values = ["sEXT", "sNEU", "sAGR", "sCON", "sOPN", "cEXT", "c0EU", "cAGR", "cCON", "cOPN"]
 	## read files
 	def readFiles(self):
-		self.better = pd.read_csv(self.path, names = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust'])
+		self.better = pd.read_csv(self.path, names = self.attr)
 		self.voca = self.better["voculabury"].values.tolist()
 		self.dic = self.better.set_index("voculabury").T.to_dict("list")
 		self.data = pd.read_csv(self.files)
 	## data processing
 	def process(self):
+		process = []
 		## user ID
 		uid = set(self.data["AUTHID"].values.tolist())
+		stop = set(stopwords.words("english"))
 		## iterate each user
 		for id in uid:
 			## store each user's processed status update
 			tokens = []
 			## subset dataset
 			k1 = self.data[self.data["AUTHID"] == id]
+			t = k1[k1.columns[-10:]].iloc[0].values.tolist()
 			## retrieve user's status update
 			s1 = k1["STATUS"].values.tolist()
 			## iterate each status update 
 			for each in s1:
 				## remove punctuation
-				temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower())]
+				temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower()) if not w in stop]
 				## remove stopwords
 				x = [w for w in temp if w in self.voca]
 				tokens.append(x)
@@ -61,8 +67,11 @@ class trainRegression:
 						attr = [x + y for x, y in zip(attr, self.dic[item])]
 					temp.append(attr)
 			## element-wise addtion among list of lists
-			self.processed.append([sum(x) for x in zip(*temp)])
+			process.append([sum(x) for x in zip(*temp)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
+			## reformat into new and processed dataframe
+			self.processed = pd.DataFrame(process, columns = self.attr[1:] + self.values)
 ## test
 x = trainRegression()
 x.readFiles()
 x.process()
+print x.processed
