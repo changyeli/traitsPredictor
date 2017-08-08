@@ -10,6 +10,7 @@ from sklearn import svm
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_predict
+from sklearn import metrics
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -19,7 +20,7 @@ class trainProcess:
 		self.better = pd.DataFrame() ## to store data
 		self.vocal = {} ## reformat dataframe to dict, voculabury as key, attributes as values
 		self.words = [] ## word to be analyzed
-		self.matrix = [] ## normalized matrix layout for training data
+		self.attr = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust']
 	## read all .csv file
 	# output: tokenized word for each status update
 	def readFiles(self):
@@ -29,7 +30,7 @@ class trainProcess:
 				if files.endswith(".csv"):
 					docs.append(files)
 		## with column name
-		self.better = pd.read_csv(self.path, names = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust'])
+		self.better = pd.read_csv(self.path, names = self.attr)
 		self.words = list(self.better["voculabury"])
 		self.vocal = self.better.set_index("voculabury").T.to_dict("list")
 		return docs
@@ -51,6 +52,7 @@ class trainProcess:
 	## reformat data into matrix layout, each status is a 10-dimensional vector, 
 	## with adding each word's attribute to corresponding column
 	# input: pre-processed tokenized words (list of lists) from processData function
+	# output: processed dataframe
 	def getAttr(self, values):
 		temp = [] ## temporary data storage
 		## every status update
@@ -67,63 +69,43 @@ class trainProcess:
 		## normalize matrix
 		temp = pd.DataFrame(temp)
 		temp = np.divide((temp - np.mean(temp)), 15.)
-		self.matrix = temp
-	## train models, file by file
-	def trainModel(self, filename, per):
-		
-		## randomly select train and test data
-		train = self.matrix.sample(frac = per, replace = False)
-		train_index = list(train.index)
-		test_index = list(set(list(range(9917))) - set(train_index))
-		test = pd.DataFrame(self.matrix, index = test_index)
-		## retrieve class label 
-		labels = pd.read_csv(self.root + filename, usecols = [1])
-		labelTrain = pd.DataFrame(labels, index = train_index)
-		labelTest = pd.DataFrame(labels, index = test_index)
-		## dataframe to list
-		labelTrain = labelTrain.values.tolist()
-		labelTest = labelTest.values.tolist()
-
-		## model fitting
+		return temp
+	## training model process
+	# input: processed dataframe, file to be read
+	# output: prediction scores by cross validation
+	def trainModel(self, df, filename):
+		## add label column
+		df.columns = self.attr[1:]
+		label = pd.read_csv(self.root + filename, usecols = [1])
+		df = df.assign(label = label.values)
+		df.to_csv("test.csv")
 		####################################
 		# MLP
 		clf = MLPClassifier(activation = "logistic", solver = "adam", 
-			alpha = 0.001, max_iter = 900000, hidden_layer_sizes = (150000, ))
-		clf.fit(train, labelTrain)
-		labelPredict = clf.predict(test)
-		## find the correct predictions
-		rate = [i for i, j in zip(labelPredict, labelTest) if i == j]
-		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
-
-		#######################################
+			alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (15000, ))
+		predicted = cross_val_predict(clf, df[self.attr[1:]], df["label"], cv = 10)
+		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted)
+		####################################
 		# SVM
 		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		clf1.fit(train, labelTrain)
-		labelPredict1 = clf1.predict(test)
-		rate1 = [i for i, j in zip(labelPredict1, labelTest) if i == j]
-		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
-		
+		predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
+		print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
-		clf2.fit(train, labelTrain)
-		labelPredict2 = clf2.predict(test)
-		rate2 = [i for i, j in zip(labelPredict2, labelTest) if i == j]
-		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
-		
-		###########################################
+		predicted = cross_val_predict(clf2, df[self.attr[1:]], df["label"], cv = 10)
+		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted)
+		####################################
 		# KNN
 		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		clf3.fit(train, labelTrain)
-		labelPredict3 = clf3.predict(test)
-		rate3 = [i for i, j in zip(labelPredict3, labelTest) if i == j]
-		print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
-		
+		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
+		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
 
 ## test
 x = trainProcess()
 docs = x.readFiles()
 tokens = x.processData()
-x.getAttr(tokens)
+df = x.getAttr(tokens)
 for item in docs:
-	x.trainModel(item, 0.9)
+	print "processing file:  ", item
+	x.trainModel(df, item)
