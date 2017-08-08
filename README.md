@@ -14,13 +14,13 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 ### Model Selection
 
-For each trait, model with the highest correct rate will be selected.
+For each trait, model with the highest 10-fold cross validation score will be selected.
 
-- Openness: MLP or Bernoulli Naive Bayes, with correct rate 74%
-- Conscientiousness: MLP or Bernoulli Naive Bayes, with correct rate 56%
-- Extroversion: MLP with correct rate 57.86%
-- Agreeableness: MLP with correct rate 57.4%
-- Neuroticism: MLP or Bernoulli Naive Bayes, with correct rate 62.5%
+- Openness: Bernoulli Naive Bayes, with correct rate 74%
+- Conscientiousness: Bernoulli Naive Bayes, with correct rate 53%
+- Extroversion: Bernoulli Naive Bayes with correct rate 56%
+- Agreeableness: MLP with correct rate 52%
+- Neuroticism: Bernoulli Naive Bayes, with correct rate 62%
 
 ### Features
 - Predicting users' personality traits.
