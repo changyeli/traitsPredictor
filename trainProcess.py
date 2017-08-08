@@ -87,9 +87,9 @@ class trainProcess:
 		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted)
 		####################################
 		# SVM
-		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
-		print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
+		#clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
+		#predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
+		#print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
@@ -97,15 +97,26 @@ class trainProcess:
 		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted)
 		####################################
 		# KNN
-		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
-		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
+		#clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
+		#predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
+		#print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
+
+		## export trained model
+		if(filename == "cAGR.csv"):
+			return clf
+		else:
+			return clf2
+	def getModel(self, docs, df):
+		models = []
+		for item in docs:
+			models.append(self.trainModel(df, item))
+		return models
+
 
 ## test
 x = trainProcess()
 docs = x.readFiles()
 tokens = x.processData()
 df = x.getAttr(tokens)
-for item in docs:
-	print "processing file:  ", item
-	x.trainModel(df, item)
+models = x.getModel(docs, df)
+df = x.getAttr(tokens)
