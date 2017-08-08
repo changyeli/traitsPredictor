@@ -9,6 +9,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn import svm
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import cross_val_predict
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -69,71 +70,60 @@ class trainProcess:
 		self.matrix = temp
 	## train models, file by file
 	def trainModel(self, filename, per):
-		models = {}
-		rates = {}
-		for i in range(10):
-			## randomly select train and test data
-			train = self.matrix.sample(frac = per, replace = False)
-			train_index = list(train.index)
-			test_index = list(set(list(range(9917))) - set(train_index))
-			test = pd.DataFrame(self.matrix, index = test_index)
-			## retrieve class label 
-			labels = pd.read_csv(self.root + filename, usecols = [1])
-			labelTrain = pd.DataFrame(labels, index = train_index)
-			labelTest = pd.DataFrame(labels, index = test_index)
-			## dataframe to list
-			labelTrain = labelTrain.values.tolist()
-			labelTest = labelTest.values.tolist()
+		
+		## randomly select train and test data
+		train = self.matrix.sample(frac = per, replace = False)
+		train_index = list(train.index)
+		test_index = list(set(list(range(9917))) - set(train_index))
+		test = pd.DataFrame(self.matrix, index = test_index)
+		## retrieve class label 
+		labels = pd.read_csv(self.root + filename, usecols = [1])
+		labelTrain = pd.DataFrame(labels, index = train_index)
+		labelTest = pd.DataFrame(labels, index = test_index)
+		## dataframe to list
+		labelTrain = labelTrain.values.tolist()
+		labelTest = labelTest.values.tolist()
 
-			## model fitting
-			####################################
-			# MLP
-			clf = MLPClassifier(activation = "logistic", solver = "adam", 
-				alpha = 0.001, max_iter = 900000, hidden_layer_sizes = (150000, ))
-			clf.fit(train, labelTrain)
-			labelPredict = clf.predict(test)
-			## find the correct predictions
-			rate = [i for i, j in zip(labelPredict, labelTest) if i == j]
-			print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
-			rates["MLP"] = float(len(rate))/float(len(labelPredict))
-			models["MLP"] = clf
-			#######################################
-			# SVM
-			clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-			clf1.fit(train, labelTrain)
-			labelPredict1 = clf1.predict(test)
-			rate1 = [i for i, j in zip(labelPredict1, labelTest) if i == j]
-			print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
-			rates["SVM"] = float(len(rate1))/float(len(labelPredict1))
-			models["SVM"] = clf1
-			###########################################
-			# Bernoulli naive bayes
-			clf2 = BernoulliNB()
-			clf2.fit(train, labelTrain)
-			labelPredict2 = clf2.predict(test)
-			rate2 = [i for i, j in zip(labelPredict2, labelTest) if i == j]
-			print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
-			rates["NB"] = float(len(rate2))/float(len(labelPredict2))
-			models["NB"] = clf2
-			###########################################
-			# KNN
-			clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-			clf3.fit(train, labelTrain)
-			labelPredict3 = clf3.predict(test)
-			rate3 = [i for i, j in zip(labelPredict3, labelTest) if i == j]
-			print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
-			rates["KNN"] = float(len(rate2))/float(len(labelPredict2))
-			models["KNN"] = clf3
+		## model fitting
+		####################################
+		# MLP
+		clf = MLPClassifier(activation = "logistic", solver = "adam", 
+			alpha = 0.001, max_iter = 900000, hidden_layer_sizes = (150000, ))
+		clf.fit(train, labelTrain)
+		labelPredict = clf.predict(test)
+		## find the correct predictions
+		rate = [i for i, j in zip(labelPredict, labelTest) if i == j]
+		print "MLP correct rate: ", float(len(rate))/float(len(labelPredict))
 
-		## find the best model
-		method = max(rates.iteritems(), key = operator.itemgetter(1))[0]
-		return models[method]
+		#######################################
+		# SVM
+		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
+		clf1.fit(train, labelTrain)
+		labelPredict1 = clf1.predict(test)
+		rate1 = [i for i, j in zip(labelPredict1, labelTest) if i == j]
+		print "SVM correct rate: ", float(len(rate1))/float(len(labelPredict1))
+		
+		###########################################
+		# Bernoulli naive bayes
+		clf2 = BernoulliNB()
+		clf2.fit(train, labelTrain)
+		labelPredict2 = clf2.predict(test)
+		rate2 = [i for i, j in zip(labelPredict2, labelTest) if i == j]
+		print "Bernoulli Naive Bayes correct rate: ", float(len(rate2))/float(len(labelPredict2))
+		
+		###########################################
+		# KNN
+		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
+		clf3.fit(train, labelTrain)
+		labelPredict3 = clf3.predict(test)
+		rate3 = [i for i, j in zip(labelPredict3, labelTest) if i == j]
+		print "KNN correct rate: ", float(len(rate3))/float(len(labelPredict3))
+		
 
 ## test
 x = trainProcess()
 docs = x.readFiles()
 tokens = x.processData()
 x.getAttr(tokens)
-models = {}
 for item in docs:
-	models[item] = x.trainModel(item, 0.9)
+	x.trainModel(item, 0.9)
