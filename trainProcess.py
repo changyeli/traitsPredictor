@@ -11,6 +11,7 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
+from sklearn import preprocessing
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -68,7 +69,8 @@ class trainProcess:
 				temp.append(attr)
 		## normalize matrix
 		temp = pd.DataFrame(temp)
-		temp = np.divide((temp - np.mean(temp)), 15.)
+		temp = preprocessing.normalize(temp)
+		temp = pd.DataFrame(temp)
 		return temp
 	## training model process
 	# input: processed dataframe, file to be read
@@ -87,9 +89,9 @@ class trainProcess:
 		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted)
 		####################################
 		# SVM
-		#clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		#predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
-		#print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
+		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
+		predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
+		print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
@@ -97,9 +99,9 @@ class trainProcess:
 		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted)
 		####################################
 		# KNN
-		#clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		#predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
-		#print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
+		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
+		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
+		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
 
 		## export trained model
 		if(filename == "cAGR.csv"):
@@ -109,6 +111,7 @@ class trainProcess:
 	def getModel(self, docs, df):
 		models = []
 		for item in docs:
+			print "Process file:  ", item
 			models.append(self.trainModel(df, item))
 		return models
 
@@ -119,4 +122,3 @@ docs = x.readFiles()
 tokens = x.processData()
 df = x.getAttr(tokens)
 models = x.getModel(docs, df)
-df = x.getAttr(tokens)

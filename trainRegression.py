@@ -7,6 +7,7 @@ import sklearn
 import numpy as np 
 from operator import add
 from nltk.corpus import stopwords
+from sklearn import preprocessing
 class trainRegression:
 	def __init__(self):
 		## path of vocabulary list in better format
@@ -66,11 +67,13 @@ class trainRegression:
 					for item in each:
 						attr = [x + y for x, y in zip(attr, self.dic[item])]
 					temp.append(attr)
+			temp_scaled = preprocessing.normalize(temp)
+
 			## element-wise addtion among list of lists
-			process.append([sum(x) for x in zip(*temp)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
+			process.append([sum(x) for x in zip(*temp_scaled)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
 			## reformat into new and processed dataframe
-			self.processed = pd.DataFrame(process, columns = self.attr[1:] + self.values)
-			#self.processed.to_csv("processed_data.csv")
+		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
+		process.to_csv("processed_data.csv", index = False)
 ## test
 x = trainRegression()
 x.readFiles()

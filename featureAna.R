@@ -1,6 +1,8 @@
 library(readr)
 library(ggplot2)
 library(MASS)
+library(leaps)
+library(car)
 ## load dataset
 processed_data = read_csv("~/Documents/scripts/traitsPredictor/processed_data.csv")
 processed_data = subset(processed_data, select = -c(X1))
@@ -8,10 +10,14 @@ processed_data = subset(processed_data, select = -c(X1))
 val = names(processed_data)[1:10]
 sext = processed_data[, 1:11]
 ## fit model
-pairs(sext[, 1:10])
-full = lm(sEXT ~., data = sext)
-step(full, steps = 10000, k = 2, direction = "both")
-m2 = lm(sEXT ~ sadness + positive + surprise + fear, data = sext)
-m3 = lm(sEXT ~ sadness + positive + fear, data = sext)
+sext1 = sext[1:200, ]
+full = lm(sext~., data = sext1)
+t = regsubsets(sEXT ~ ., data = sext1, nbest = 5)
+plot(t)
+subsets(t, statistic = "adjr2")
+m1 = lm(sEXT~sadness + positive + surprise + fear, data = sext1)
+summary(m1)
+anova(m1)
+m2 = lm(sEXT ~ negative + sadness + positive + surprise + fear, data = sext1)
 summary(m2)
-anova(m2, m3)
+anova(m1, m2)
