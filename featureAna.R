@@ -15,14 +15,14 @@ t = regsubsets(sEXT ~ ., data = sext1, nbest = 10)
 plot(t)
 subsets(t, statistic = "adjr2", legend = FALSE)
 step(full, scale = 0, direction = "backward")
-m1 = lm(sEXT ~ positive + fear, data = sext1)
-m2 = lm(sEXT ~ sadness + positive + surprise + fear, data = sext1)
-m3 = lm(sEXT ~ sadness + positive + fear, data = sext1)
-m4 = lm(sEXT ~ sadness + disgust + positive + surprise + fear, data = sext1)
-m5 = lm(sEXT ~ negative + sadness + positive + surprise + fear, data = sext1)
-m6 = lm(sEXT ~ sadness + disgust + anger + surprise + fear, data = sext1)
-m7 = lm(sEXT ~ joy + negative + sadness + positive + surprise + fear, data = sext1)
-m8 = lm(sEXT ~ anger + joy + negative + sadness + positive + surprise + fear + trust, data = sext1)
+m1 = svm(sEXT ~ positive + fear, data = sext1, kernel = "radial")
+m2 = svm(sEXT ~ sadness + positive + surprise + fear, data = sext1, kernel = "radial")
+m3 = svm(sEXT ~ sadness + positive + fear, data = sext1, kernel = "radial")
+m4 = svm(sEXT ~ sadness + disgust + positive + surprise + fear, data = sext1, kernel = "radial")
+m5 = svm(sEXT ~ negative + sadness + positive + surprise + fear, data = sext1, kernel = "radial")
+m6 = svm(sEXT ~ sadness + disgust + anger + surprise + fear, data = sext1, kernel = "radial")
+m7 = svm(sEXT ~ joy + negative + sadness + positive + surprise + fear, data = sext1, kernel = "radial")
+m8 = svm(sEXT ~ anger + joy + negative + sadness + positive + surprise + fear + trust, data = sext1, kernel = "radial")
 ## calculate rMSE and MAE
 evaluate = function(actually, predicted){
   error = actually - predicted
@@ -68,10 +68,3 @@ pre = predict(m8, newdata = sext2)
 evaluate(sext2$sEXT, pre)
 plot(sext2$sEXT)
 points(pre, col = "red", pch = 16)
-
-## Support Vector Regression
-model1 = svm(sEXT ~ sadness + positive + surprise + fear, data = sext1)
-pre = predict(model1, sext2)
-plot(sext2$sEXT)
-points(pre, col = "red", pch = 16)
-pre
