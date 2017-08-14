@@ -74,18 +74,18 @@ class trainBuild:
 		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
 		#process.to_csv("processed_data.csv", index = False)
 		return process
-	## only keep median if |median - mean| <=0.09
+	## only keep trait that |median - mean| <=0.05
 	# input: dataframe that only contains trait score
-	# output: dict, with trait as key, all median as values
+	# output: list that contains valid trait name
 	def compare(self, df):
 		group = {}
-		df = df[df.cEXT == 1]
 		temp = df.iloc[:, 10:15]
 		s1 = temp.median(axis = 0)
 		s2 = temp.mean(axis = 0)
 		s = pd.concat([s1, s2], axis = 1)
-		print s
-		print s[0].values.tolist()
+		s = abs(s[0]-s[1]) <= 0.05
+		return s[s == True].index.values.tolist()
+	## get 
 ## test
 x = trainBuild()
 x.readFiles()
