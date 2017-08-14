@@ -37,7 +37,6 @@ User selection is randomly selected from [here](http://friendorfollow.com/twitte
 - ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
 - ```featureExtraction.py```: feature extraction and I/O to better format.
 - ```featureBuild.py```: classifying users into clusters, using K-means, based on their tweets' feature.
-- ```featureAna.R```: feature analysis.
 - ```trainProcess.py```: training data process, using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 - ```trainBuild.py```: training data process, to get an average score for each trait. At this point, I'm lacking of an accurate method of predicting trait score based on unigram using multivariate linear regression. So currently the score is predicted based on the median of the trait score from training sample. Due to limited sample, the score prediction at this point may not be accurate, but it points to a direction for future development in some ways. Any ideas to improve is welcome!
 
