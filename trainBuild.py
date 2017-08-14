@@ -68,13 +68,26 @@ class trainBuild:
 						attr = [x + y for x, y in zip(attr, self.dic[item])]
 					temp.append(attr)
 			temp_scaled = preprocessing.normalize(temp)
-
 			## element-wise addtion among list of lists
 			process.append([sum(x) for x in zip(*temp_scaled)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
 			## reformat into new and processed dataframe
 		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
-		process.to_csv("processed_data.csv", index = False)
+		#process.to_csv("processed_data.csv", index = False)
+		return process
+	## only keep median if |median - mean| <=0.09
+	# input: dataframe that only contains trait score
+	# output: dict, with trait as key, all median as values
+	def compare(self, df):
+		group = {}
+		df = df[df.cEXT == 1]
+		temp = df.iloc[:, 10:15]
+		s1 = temp.median(axis = 0)
+		s2 = temp.mean(axis = 0)
+		s = pd.concat([s1, s2], axis = 1)
+		print s
+		print s[0].values.tolist()
 ## test
 x = trainBuild()
 x.readFiles()
-x.process()
+df = x.process()
+x.compare(df)
