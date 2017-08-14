@@ -75,6 +75,11 @@ class trainBuild:
 		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
 		return process
 		#process.to_csv("processed_data.csv", index = False)
+	## get valid median score for a specific trait
+	# input: dataframe that contains all data
+	# input: trait to be examed
+	# input: trait class, 1 as yes, 0 as no
+	# output: dict, with trait as key, median of trait score as value
 	def compare(self, df, tr, status):
 		label = "c" + tr
 		score = "s" + tr
@@ -83,10 +88,9 @@ class trainBuild:
 		s2 = temp.mean(axis = 0)
 		s = pd.concat([s1, s2], axis = 1)
 		ss = abs(s[0]-s[1]) <= 0.05
-		print s[ss == True][0]
+		return s[ss == True][0].to_dict()
 ## test
 x = trainBuild()
 x.readFiles()
 df = x.process()
-#x.group(df, "EXT", 1)
 x.compare(df, "OPN", 1)
