@@ -26,7 +26,8 @@ class trainBuild:
 		self.data = pd.DataFrame()
 		## attribute name
 		self.attr = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust']
-		self.values = ["sEXT", "sNEU", "sAGR", "sCON", "sOPN", "cEXT", "c0EU", "cAGR", "cCON", "cOPN"]
+		self.values = ["sEXT", "sNEU", "sAGR", "sCON", "sOPN", "cEXT", "cNEU", "cAGR", "cCON", "cOPN"]
+		
 	## read files
 	def readFiles(self):
 		self.better = pd.read_csv(self.path, names = self.attr)
@@ -72,22 +73,20 @@ class trainBuild:
 			process.append([sum(x) for x in zip(*temp_scaled)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
 			## reformat into new and processed dataframe
 		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
-		#process.to_csv("processed_data.csv", index = False)
 		return process
-	## only keep trait that |median - mean| <=0.05
-	# input: dataframe that only contains trait score
-	# output: list that contains valid trait name
-	def compare(self, df):
-		group = {}
-		temp = df.iloc[:, 10:15]
+		#process.to_csv("processed_data.csv", index = False)
+	def compare(self, df, tr, status):
+		label = "c" + tr
+		score = "s" + tr
+		temp = df.iloc[:, 10:15][(df[label] == status)]
 		s1 = temp.median(axis = 0)
 		s2 = temp.mean(axis = 0)
 		s = pd.concat([s1, s2], axis = 1)
-		s = abs(s[0]-s[1]) <= 0.05
-		return s[s == True].index.values.tolist()
-	## get 
+		ss = abs(s[0]-s[1]) <= 0.05
+		print s[ss == True][0]
 ## test
 x = trainBuild()
 x.readFiles()
 df = x.process()
-x.compare(df)
+#x.group(df, "EXT", 1)
+x.compare(df, "OPN", 1)
