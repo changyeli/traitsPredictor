@@ -99,4 +99,4 @@ class trainBuild:
 			print "process trait: ", each
 			fullYes[each] = self.compare(df, each, 1)
 			fullNo[each] = self.compare(df, each, 0)
-		return(t1, t2)
+		return(fullYes, fullNo)

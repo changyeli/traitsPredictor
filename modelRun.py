@@ -2,6 +2,8 @@ import os
 import csv
 import pandas as pd 
 from sklearn import preprocessing
+from trainProcess import trainProcess
+from trainBuild import trainBuild
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
@@ -28,9 +30,20 @@ class modelRun:
 		attr = preprocessing.normalize(attr)
 		return attr
 	## get prediction from trained model
-	def 
+	def getTrain(self):
+		attr = self.processFiles()
+		x = trainProcess()
+		files = x.readFiles()
+		tokens = x.processData()
+		df = x.getAttr(tokens)
+		#models = x.getModel(files, df)
+		y = trainBuild()
+		y.readFiles()
+		df1 = y.process()
+		score = y.group(df1)
+
 
 
 ## test
 x = modelRun()
-x.processFiles()
+x.getTrain()
