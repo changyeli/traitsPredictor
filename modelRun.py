@@ -1,6 +1,7 @@
 import os
 import csv
 import pandas as pd 
+from sklearn import preprocessing
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
@@ -17,8 +18,17 @@ class modelRun:
 	# output: normalized dataframe, which each entry represents user's attribute
 	def processFiles(self):
 		docs = self.getDocs()
+		attr = []
 		for each in docs:
+			print "processing file: ", each
 			df = pd.read_csv(self.path + each)
+			attr.append(df.sum(axis = 0).values.tolist())
+		attr = pd.DataFrame(attr)
+		## normalization
+		attr = preprocessing.normalize(attr)
+		return attr
+	## get prediction from trained model
+	def 
 
 
 ## test
