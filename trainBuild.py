@@ -87,25 +87,21 @@ class trainBuild:
 		s1 = temp.median(axis = 0)
 		s2 = temp.mean(axis = 0)
 		s = pd.concat([s1, s2], axis = 1)
-		ss = abs(s[0]-s[1]) <= 0.05
+		ss = abs(s[0]-s[1]) < 0.1
 		return [{u: v} for (u, v) in s[ss == True][0].to_dict().iteritems()]
 	## get full dictionary for every trait
 	def group(self, df):
-		t1 = {} ## scores for all "yes"
-		t2 = {} ## scores for all "no"
+		fullYes = {} ## scores for all "yes"
+		fullNo = {} ## scores for all "no"
 		trait = ["EXT", "NEU", "AGR", "CON", "OPN"]
 		## get unmerged dict
 		for each in trait:
 			print "process trait: ", each
-			t1[each] = self.compare(df, each, 1)
-			print t1
-			t2[each] = self.compare(df, each, 0)
-			print t2
-		print t1
-		print "\n"
-		print t2
+			fullYes[each] = self.compare(df, each, 1)
+			fullNo[each] = self.compare(df, each, 0)
+		return(t1, t2)
 ## test
 x = trainBuild()
 x.readFiles()
 df = x.process()
-x.group(df)
+m = x.group(df)
