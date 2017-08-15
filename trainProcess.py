@@ -109,8 +109,10 @@ class trainProcess:
 		else:
 			return clf2
 	def getModel(self, docs, df):
-		models = []
+		models = {}
 		for item in docs:
 			print "Process file:  ", item
-			models.append(self.trainModel(df, item))
+			s = item[1:]
+			s = s[:-4]
+			models[s] = self.trainModel(df, item)
 		return models

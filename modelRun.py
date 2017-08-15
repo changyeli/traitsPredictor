@@ -30,13 +30,19 @@ class modelRun:
 		attr = preprocessing.normalize(attr)
 		return attr
 	## get prediction from trained model
-	def getTrain(self):
+	# output: list of five list, which each sublist is the predicted label for each trait
+	def getLabel(self):
 		attr = self.processFiles()
+		traits = ["EXT", "NEU", "AGR", "CON", "OPN"]
+		## get trained model
 		x = trainProcess()
 		files = x.readFiles()
 		tokens = x.processData()
 		df = x.getAttr(tokens)
-		#models = x.getModel(files, df)
+		models = x.getModel(files, df)
+	## get scores from training data
+	# output: user scores for each trait
+	def getScore(self):
 		y = trainBuild()
 		y.readFiles()
 		df1 = y.process()
@@ -46,4 +52,4 @@ class modelRun:
 
 ## test
 x = modelRun()
-x.getTrain()
+x.getLabel()
