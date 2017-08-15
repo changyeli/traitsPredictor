@@ -12,6 +12,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 from sklearn import preprocessing
+from sklearn.pipeline import Pipeline
 import numpy as np 
 class trainProcess:
 	def __init__(self):
@@ -49,7 +50,6 @@ class trainProcess:
 			x = [w for w in temp if w in self.words]
 			tokens.append(x)
 		return tokens
-			## treat all empty lists as zeros
 	## reformat data into matrix layout, each status is a 10-dimensional vector, 
 	## with adding each word's attribute to corresponding column
 	# input: pre-processed tokenized words (list of lists) from processData function
@@ -103,16 +103,4 @@ class trainProcess:
 		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
 		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
 
-		## export trained model
-		if(filename == "cAGR.csv"):
-			return clf
-		else:
-			return clf2
-	def getModel(self, docs, df):
-		models = {}
-		for item in docs:
-			print "Process file:  ", item
-			s = item[1:]
-			s = s[:-4]
-			models[s] = self.trainModel(df, item)
-		return models
+		## TODO: use pipeline to store best-fitted model

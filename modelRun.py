@@ -34,12 +34,18 @@ class modelRun:
 	def getLabel(self):
 		attr = self.processFiles()
 		traits = ["EXT", "NEU", "AGR", "CON", "OPN"]
+		pre = [] ## store predictions for each trait
 		## get trained model
 		x = trainProcess()
 		files = x.readFiles()
 		tokens = x.processData()
 		df = x.getAttr(tokens)
 		models = x.getModel(files, df)
+		## get prediction
+		for item in traits:
+			p = models[item].predict(attr).values.tolist()
+			pre.append(p)
+		print pre
 	## get scores from training data
 	# output: user scores for each trait
 	def getScore(self):
