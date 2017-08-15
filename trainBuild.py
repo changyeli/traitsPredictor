@@ -79,7 +79,7 @@ class trainBuild:
 	# input: dataframe that contains all data
 	# input: trait to be examed
 	# input: trait class, 1 as yes, 0 as no
-	# output: dict, with trait as key, median of trait score as value
+	# output: list of dict, with trait as key, median of trait score as value
 	def compare(self, df, tr, status):
 		label = "c" + tr
 		score = "s" + tr
