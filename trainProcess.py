@@ -114,11 +114,3 @@ class trainProcess:
 			print "Process file:  ", item
 			models.append(self.trainModel(df, item))
 		return models
-
-
-## test
-x = trainProcess()
-docs = x.readFiles()
-tokens = x.processData()
-df = x.getAttr(tokens)
-models = x.getModel(docs, df)

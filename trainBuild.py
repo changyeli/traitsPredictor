@@ -100,8 +100,3 @@ class trainBuild:
 			fullYes[each] = self.compare(df, each, 1)
 			fullNo[each] = self.compare(df, each, 0)
 		return(t1, t2)
-## test
-x = trainBuild()
-x.readFiles()
-df = x.process()
-m = x.group(df)
