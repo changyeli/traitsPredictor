@@ -3,7 +3,8 @@ import os
 import pandas as pd 
 import nltk
 import string
-import operator
+import numpy as np 
+import pickle
 from nltk.corpus import stopwords
 from sklearn.neural_network import MLPClassifier
 from sklearn import svm
@@ -12,8 +13,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 from sklearn import preprocessing
-from sklearn.pipeline import Pipeline
-import numpy as np 
 class trainProcess:
 	def __init__(self):
 		self.total = pd.DataFrame()
@@ -73,34 +72,20 @@ class trainProcess:
 		temp = pd.DataFrame(temp)
 		return temp
 	## training model process
-	# input: processed dataframe, file to be read
-	# output: prediction scores by cross validation
+	# input: processed dataframe, file to be read label
+	# output: dictionary, with trait as key, best fitting model as value
 	def trainModel(self, df, filename):
-		## add label column
-		df.columns = self.attr[1:]
-		label = pd.read_csv(self.root + filename, usecols = [1])
-		df = df.assign(label = label.values)
-		df.to_csv("test.csv")
-		####################################
-		# MLP
-		clf = MLPClassifier(activation = "logistic", solver = "adam", 
-			alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (15000, ))
-		predicted = cross_val_predict(clf, df[self.attr[1:]], df["label"], cv = 10)
-		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted)
-		####################################
-		# SVM
-		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
-		print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
-		###########################################
-		# Bernoulli naive bayes
-		clf2 = BernoulliNB()
-		predicted = cross_val_predict(clf2, df[self.attr[1:]], df["label"], cv = 10)
-		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted)
-		####################################
-		# KNN
-		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
-		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
+		models = {}
+		nb = BernoulliNB()
+		mlp =  MLPClassifier(activation = "logistic", solver = "adam", alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (15000, ))
+		for item in filename:
+			label = pd.read_csv(self.root + item, usecols = [1])
+			s = item.translate(None, string.ascii_lowercase)
+			if(item == "cAGR.csv"):
+				mlp.fit(df, label)
+				models[s] = pickle.dumps(mlp)
+			else:
+				nb.fit(df, label)
+				models[s] = pickle.dumps(nb)
+		return models
 
-		## TODO: use pipeline to store best-fitted model

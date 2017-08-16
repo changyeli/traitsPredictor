@@ -22,7 +22,7 @@ For each trait, model with the highest 10-fold cross validation score will be se
 - Agreeableness: MLP with correct rate 52%
 - Neuroticism: Bernoulli Naive Bayes, with correct rate 62%
 
-Based on CV scores above, Bernoulli Naive Bayes and MLP will be the final classifier.
+Based on CV scores above, Bernoulli Naive Bayes and MLP will be the final classifiers.
 
 ### Features
 - Predicting users' personality traits.

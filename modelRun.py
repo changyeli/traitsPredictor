@@ -39,13 +39,8 @@ class modelRun:
 		x = trainProcess()
 		files = x.readFiles()
 		tokens = x.processData()
-		df = x.getAttr(tokens)
-		models = x.getModel(files, df)
-		## get prediction
-		for item in traits:
-			p = models[item].predict(attr).values.tolist()
-			pre.append(p)
-		print pre
+		dff = x.getAttr(tokens)
+		models = x.trainModel(dff, files)
 	## get scores from training data
 	# output: user scores for each trait
 	def getScore(self):
