@@ -11,31 +11,30 @@ with open('dict.csv', 'rb') as csv_file:
     mydict = dict(reader)
 
 
-## train models, file by file
-	def trainModel(self, df, filename):
+#def trainModel(self, df, filename):
+		print "Process file: ", filename
 		## add label column
 		df.columns = self.attr[1:]
 		label = pd.read_csv(self.root + filename, usecols = [1])
 		df = df.assign(label = label.values)
-		df.to_csv("test.csv")
+		####################################
+		# KNN
+		clf3 = linear_model.SGDClassifier(loss = "log", penalty = "elasticnet")
+		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
+		print "SGD CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
 		####################################
 		# MLP
-		clf = MLPClassifier(activation = "logistic", solver = "adam", 
-			alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (15000, ))
+		clf = MLPClassifier(solver = "adam", 
+			alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (1500, 10))
 		predicted = cross_val_predict(clf, df[self.attr[1:]], df["label"], cv = 10)
-		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted)
-		####################################
-		# SVM
-		clf1 = svm.NuSVC(kernel = "sigmoid", nu = 0.3)
-		predicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
-		print "SVM CV score: ", metrics.accuracy_score(df["label"], predicted)
+		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
+		#######################################
+		# tree
+		clf1 = tree.DecisionTreeClassifier(criterion = "entropy", splitter = "random", max_features = "sqrt")
+		redicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
+		print "Decision Tree CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
 		predicted = cross_val_predict(clf2, df[self.attr[1:]], df["label"], cv = 10)
-		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted)
-		####################################
-		# KNN
-		clf3 = KNeighborsClassifier(n_neighbors = 10, weights = "distance")
-		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
-		print "KNN CV score: ", metrics.accuracy_score(df["label"], predicted)
+		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
