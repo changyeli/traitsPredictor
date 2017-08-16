@@ -78,14 +78,16 @@ class trainProcess:
 		models = {}
 		nb = BernoulliNB()
 		mlp =  MLPClassifier(activation = "logistic", solver = "adam", alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (15000, ))
+		print "======= Model Train Process Start ========"
 		for item in filename:
 			label = pd.read_csv(self.root + item, usecols = [1])
-			s = item.translate(None, string.ascii_lowercase)
+			s = "".join([c for c in item if c.isupper()])
 			if(item == "cAGR.csv"):
 				mlp.fit(df, label)
 				models[s] = pickle.dumps(mlp)
 			else:
 				nb.fit(df, label)
 				models[s] = pickle.dumps(nb)
+		print "======= Model Train Process End ======="
 		return models
 

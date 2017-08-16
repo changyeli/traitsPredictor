@@ -1,6 +1,7 @@
 import os
 import csv
 import pandas as pd 
+import pickle
 from sklearn import preprocessing
 from trainProcess import trainProcess
 from trainBuild import trainBuild
@@ -34,13 +35,19 @@ class modelRun:
 	def getLabel(self):
 		attr = self.processFiles()
 		traits = ["EXT", "NEU", "AGR", "CON", "OPN"]
-		pre = [] ## store predictions for each trait
+		pre = {} ## store predictions for each trait
 		## get trained model
 		x = trainProcess()
 		files = x.readFiles()
 		tokens = x.processData()
 		dff = x.getAttr(tokens)
 		models = x.trainModel(dff, files)
+		print attr
+		for item in traits:
+			clf = pickle.loads(models[item])
+			pre[item] = clf.predict(attr)
+		for k, v in pre.iteritems():
+			print k, v
 	## get scores from training data
 	# output: user scores for each trait
 	def getScore(self):
