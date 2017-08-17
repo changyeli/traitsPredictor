@@ -73,6 +73,8 @@ class trainBuild:
 			process.append([sum(x) for x in zip(*temp_scaled)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
 			## reformat into new and processed dataframe
 		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
+		## get labels
+		process.to_csv("processed_data.csv", index = False)
 		return process
 		#process.to_csv("processed_data.csv", index = False)
 	## get valid median score for a specific trait, which |median - mean| <= 0.05
