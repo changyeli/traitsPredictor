@@ -1,10 +1,11 @@
 import os
 import csv
-import pandas as pd 
 import pickle
+import pandas as pd
 from sklearn import preprocessing
 from trainProcess import trainProcess
 from trainBuild import trainBuild
+from sklearn.model_selection import cross_val_predict
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
@@ -19,6 +20,7 @@ class modelRun:
 		return docs
 	## get attribute vector for each test user
 	# output: normalized dataframe, which each entry represents user's attribute
+	# output: integrated dataset
 	def processFiles(self):
 		docs = self.getDocs()
 		attr = []
@@ -30,34 +32,5 @@ class modelRun:
 		## normalization
 		attr = preprocessing.normalize(attr)
 		return attr
-	## get prediction from trained model
-	# output: list of five list, which each sublist is the predicted label for each trait
-	def getLabel(self):
-		attr = self.processFiles()
-		traits = ["EXT", "NEU", "AGR", "CON", "OPN"]
-		pre = {} ## store predictions for each trait
-		## get trained model
-		x = trainProcess()
-		files = x.readFiles()
-		tokens = x.processData()
-		dff = x.getAttr(tokens)
-		models = x.trainModel(dff, files)
-		print attr
-		for item in traits:
-			clf = pickle.loads(models[item])
-			pre[item] = clf.predict(attr)
-		for k, v in pre.iteritems():
-			print k, v
-	## get scores from training data
-	# output: user scores for each trait
-	def getScore(self):
-		y = trainBuild()
-		y.readFiles()
-		df1 = y.process()
-		score = y.group(df1)
-
-
-
-## test
 x = modelRun()
-x.getLabel()
+print x.processFiles()

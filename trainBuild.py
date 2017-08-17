@@ -35,6 +35,7 @@ class trainBuild:
 		self.dic = self.better.set_index("voculabury").T.to_dict("list")
 		self.data = pd.read_csv(self.files)
 	## data processing
+	# output: integrated dataset
 	def process(self):
 		process = []
 		## user ID
@@ -76,7 +77,6 @@ class trainBuild:
 		## get labels
 		process.to_csv("processed_data.csv", index = False)
 		return process
-		#process.to_csv("processed_data.csv", index = False)
 	## get valid median score for a specific trait, which |median - mean| <= 0.05
 	# input: dataframe that contains all data
 	# input: trait to be examed
