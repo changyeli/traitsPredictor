@@ -22,7 +22,7 @@ class tweetProcess:
 	## get NRC word list and associated attributes
 	def getValues(self):
 		better = {}
-		nrc = pd.read_csv(self.process + "better.csv", header = None, index_col = False, )
+		nrc = pd.read_csv(self.process + "better.csv", header = None, index_col = False)
 		for index, row in nrc.iterrows():
 			better[row[0]] = row[1:].values.tolist()
 			self.word.append(row[0])
