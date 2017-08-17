@@ -14,27 +14,27 @@ with open('dict.csv', 'rb') as csv_file:
 #def trainModel(self, df, filename):
 		print "Process file: ", filename
 		## add label column
-		df.columns = self.attr[1:]
 		label = pd.read_csv(self.root + filename, usecols = [1])
-		df = df.assign(label = label.values)
+		print df
+		print label
 		####################################
 		# KNN
 		clf3 = linear_model.SGDClassifier(loss = "log", penalty = "elasticnet")
-		predicted = cross_val_predict(clf3, df[self.attr[1:]], df["label"], cv = 10)
-		print "SGD CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
+		scores = cross_val_score(clf3, df, label, cv = 10, scoring = "f1")
+		print("SGD Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 		####################################
 		# MLP
 		clf = MLPClassifier(solver = "adam", 
 			alpha = 0.001, max_iter = 90000, hidden_layer_sizes = (1500, 10))
-		predicted = cross_val_predict(clf, df[self.attr[1:]], df["label"], cv = 10)
-		print "MLP CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
+		scores = cross_val_score(clf, df, label, cv = 10, scoring = "f1")
+		print("MLP Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 		#######################################
 		# tree
 		clf1 = tree.DecisionTreeClassifier(criterion = "entropy", splitter = "random", max_features = "sqrt")
-		redicted = cross_val_predict(clf1, df[self.attr[1:]], df["label"], cv = 10)
-		print "Decision Tree CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
+		scores = cross_val_score(clf1, df, label, cv = 10, scoring = "f1")
+		print("Dscision Tree Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 		###########################################
 		# Bernoulli naive bayes
 		clf2 = BernoulliNB()
-		predicted = cross_val_predict(clf2, df[self.attr[1:]], df["label"], cv = 10)
-		print "NB CV score: ", metrics.accuracy_score(df["label"], predicted, normalize = True)
+		scores = cross_val_score(clf2, df, label, cv = 10, scoring = "f1")
+		print("NB Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
