@@ -1,61 +1,56 @@
 ## import packages
 import os
 import re
-import csv
 import string
-import nltk
+import pandas as pd
 from nltk.corpus import stopwords
-
 class tweetProcess:
 	def __init__(self):
 		self.root = "/Users/changye.li/Documents/scripts/traitsPredictor/data/"
 		self.process = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
-		self.document = [] ## documents ending with .txt, starting with tweet_
+		self.stop = list(set(stopwords.words("english")))
+		self.word = []
 	## get all tweet_xxx.txt files
 	# output: update self.document
 	def getFiles(self):
+		document = []
 		for r, d, f in os.walk(self.root):
 			for files in f:
 				if files.endswith(".txt") and files.startswith("tweet_"):
-					self.document.append(files)
-		return self.document
+					document.append(files)
+		return document
+	## get NRC word list and associated attributes
+	def getValues(self):
+		better = {}
+		nrc = pd.read_csv(self.process + "better.csv", header = None, index_col = False, )
+		for index, row in nrc.iterrows():
+			better[row[0]] = row[1:].values.tolist()
+			self.word.append(row[0])
+		return better
 	## read files and write all users' tweets into a list, with username as key for a dict
 	# input: filename to scan
-	# output: update self.totalChar
-	def readFiles(self, filename):
-		## extract username
-		s = filename[6:]
-		s = s[:-4]
-		## list to store all tweets 
-		tweet = []
+	# input: NRC word attributes
+	def readFiles(self, filename, values):
 		with open(self.root+filename, "r") as f:
+			tweet = [] ## attribute matrix for each user
 			for row in f:
+				attr = [] ## store attributes for each tweet
 				# remove RT, @ and url
 				row = re.sub(r"(?:@\S*|#\S*|http(?=.*://)\S*)", "", row.rsplit("\n")[0].lower())
-				row = row.replace("rt", "")
-				tweet.append(row.rsplit("\n")[0].lower())
-				tokens = []
-				## tokenize all tweets
-				for each in tweet:
-					## remove all punctuations in a tweet
-					temp = each.translate(None, string.punctuation)
-					tokens.extend(nltk.word_tokenize(temp))
-				## remove empty strings
-				tokens = filter(None, tokens)
-				x = [item for item in tokens if not item.startswith("http")]
-				x = [re.sub(r'[^\w\s]', '', item) for item in tokens]
-				## remove stopwords
-				stop = set(stopwords.words("english"))
-				x = [w for w in x if not w in stop]
-				## only keep letters in tokens
-				x = [re.sub('[^a-zA-Z]+', '', w) for w in x]
-				## write to file
-				process_name = s + ".txt"
-				with open(self.process+process_name, "w") as f:
-					for each in x:
-						f.write(each + ",")
-			print "Finish " + s + "'s tweet process"
+				row = row.replace("rt", "").rsplit("\n")[0]
+				for word in row.translate(None, string.punctuation).split():
+					if(word in self.word and word not in self.stop):
+						attr.append(values[word])
+					else:
+						continue
+				tweet.append([sum(x) for x in zip(*attr)])
+			tweet = filter(None, tweet)
+			s = filename[6:]
+			s = s[:-4]
+			pd.DataFrame(tweet).to_csv(self.process + s + ".csv", header = False, index = False)
+
 x = tweetProcess()
 docs = x.getFiles()
-for files in docs:
-	x.readFiles(files)
+better = x.getValues()
+for item in docs:
+	x.readFiles(item, better)
