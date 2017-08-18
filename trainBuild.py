@@ -1,82 +1,44 @@
-## import packages
 import os
-import pandas as pd 
-import nltk
+import re
 import string
-import sklearn
-import numpy as np 
-from operator import add
+import pandas as pd 
 from nltk.corpus import stopwords
-from sklearn import preprocessing
 class trainBuild:
 	def __init__(self):
-		## path of vocabulary list in better format
-		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/better.csv"
-		## train dataset path
-		self.files = "/Users/changye.li/Documents/scripts/traitsPredictor/mypersonality_final.csv"
-		## data frame that contains all processed status
-		## each entry represents word count of each user
-		self.processed = pd.DataFrame()
-		## vocabulary list in better format, with attributes
-		self.better = pd.DataFrame()
-		## vocabulary list
-		self.voca = []
-		self.dic = {}
-		## all unprocessed data
-		self.data = pd.DataFrame()
-		## attribute name
-		self.attr = ['voculabury', 'anticipation', 'joy', 'negative', 'sadness', 'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust']
-		self.values = ["sEXT", "sNEU", "sAGR", "sCON", "sOPN", "cEXT", "cNEU", "cAGR", "cCON", "cOPN"]
-		
-	## read files
-	def readFiles(self):
-		self.better = pd.read_csv(self.path, names = self.attr)
-		self.voca = self.better["voculabury"].values.tolist()
-		self.dic = self.better.set_index("voculabury").T.to_dict("list")
-		self.data = pd.read_csv(self.files)
-	## data processing
-	# output: integrated dataset
-	def process(self):
-		process = []
-		## user ID
-		uid = set(self.data["AUTHID"].values.tolist())
-		stop = set(stopwords.words("english"))
-		## iterate each user
-		for id in uid:
-			## store each user's processed status update
-			tokens = []
-			## subset dataset
-			k1 = self.data[self.data["AUTHID"] == id]
-			t = k1[k1.columns[-10:]].iloc[0].values.tolist()
-			## retrieve user's status update
-			s1 = k1["STATUS"].values.tolist()
-			## iterate each status update 
-			for each in s1:
-				## remove punctuation
-				temp = [w for w in nltk.word_tokenize(each.translate(None, string.punctuation).lower()) if not w in stop]
-				## remove stopwords
-				x = [w for w in temp if w in self.voca]
-				tokens.append(x)
-			## store attributes of each user's processed status update
-			temp = []
-			## iterate each status update
-			for each in tokens:
-				attr = [0]*10
-				if len(each) == 0: ## empty list
-					temp.append(attr)
-				else:
-					## iterate each word in status
-					for item in each:
-						attr = [x + y for x, y in zip(attr, self.dic[item])]
-					temp.append(attr)
-			temp_scaled = preprocessing.normalize(temp)
-			## element-wise addtion among list of lists
-			process.append([sum(x) for x in zip(*temp_scaled)] + k1[k1.columns[-10:]].iloc[0].values.tolist())
-			## reformat into new and processed dataframe
-		process = pd.DataFrame(process, columns = self.attr[1:] + self.values)
-		## get labels
-		process.to_csv("processed_data.csv", index = False)
-		return process
+		self.stop = list(set(stopwords.words("english")))
+		self.word  =[] ## NRC word list
+		self.better = {} ## NRC word attributes
+		self.data = pd.DataFrame() ## all data
+	## get all required values
+	def getValues(self):
+		nrc = pd.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/process/better.csv", header = None, index_col = False)
+		for index, row in nrc.iterrows():
+			self.better[row[0]] = row[1:].values.tolist()
+			self.word.append(row[0])
+		self.data = pd.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/mypersonality_final.csv")
+	## get attribute vectors by status
+	def getStatusProcessed(self):
+		status = [] ## processed status
+		## iterate dataframe by rows
+		for index, row in self.data.iterrows():
+			s = row["STATUS"]
+			attr = []## attribute vectors for each status
+			## status process
+			s = re.sub(r"(?:@\S*|#\S*|http(?=.*://)\S*)", "", s.rsplit("\n")[0].lower())
+			s = s.replace("rt", "").rsplit("\n")[0]
+			for word in s.translate(None, string.punctuation).split():
+				if(word in self.word and word not in self.stop):
+					attr.append(self.better[word])
+			status.append([sum(x) for x in zip(*attr)])
+		#status = filter(None, status)
+		## keep only english status, and clean the .csv file
+		label_delete = [i for i, v in enumerate(status) if not v]
+		self.data.drop(label_delete, inplace = True)
+		## update train dataset
+		self.data.to_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV1.csv", index = False)
+		## form into numerical dataframe
+	## TODO:get attribute vectors by ID
+	
 	## get valid median score for a specific trait, which |median - mean| <= 0.05
 	# input: dataframe that contains all data
 	# input: trait to be examed
@@ -102,3 +64,6 @@ class trainBuild:
 			fullYes[each] = self.compare(df, each, 1)
 			fullNo[each] = self.compare(df, each, 0)
 		return(fullYes, fullNo)
+x = trainBuild()
+x.getValues()
+x.getStatusProcessed()

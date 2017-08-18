@@ -8,7 +8,7 @@ from trainBuild import trainBuild
 from sklearn.model_selection import cross_val_predict
 class modelRun:
 	def __init__(self):
-		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
+		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/pross/"
 	## get the list of all docs 
 	# output: list that contains testing filenames
 	def getDocs(self):

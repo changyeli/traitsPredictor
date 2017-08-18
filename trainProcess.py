@@ -38,3 +38,7 @@ class trainProcess:
 		clf = RandomForestClassifier(criterion = "gini", n_estimators = 15)
 		scores = cross_val_score(clf, sample, label, cv = 10, scoring = "f1")
 		print("Random Forest Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+	def trainModel(self, trait):
+		
+x = trainProcess()
+x.trainModelIntegrated()
