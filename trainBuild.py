@@ -1,7 +1,6 @@
-import os
 import re
 import string
-import pandas as pd 
+import pandas as pd
 from nltk.corpus import stopwords
 class trainBuild:
 	def __init__(self):
@@ -41,34 +40,6 @@ class trainBuild:
 			mat.append(status[index] + row[2:].values.tolist())
 		## write to file
 		pd.DataFrame(mat).to_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv", index = False, header = False)
-
-	## TODO:get attribute vectors by ID
-	
-	## get valid median score for a specific trait, which |median - mean| <= 0.05
-	# input: dataframe that contains all data
-	# input: trait to be examed
-	# input: trait class, 1 as yes, 0 as no
-	# output: list of dict, with trait as key, median of trait score as value
-	def compare(self, df, tr, status):
-		label = "c" + tr
-		score = "s" + tr
-		temp = df.iloc[:, 10:15][(df[label] == status)]
-		s1 = temp.median(axis = 0)
-		s2 = temp.mean(axis = 0)
-		s = pd.concat([s1, s2], axis = 1)
-		ss = abs(s[0]-s[1]) < 0.1
-		return [{u: v} for (u, v) in s[ss == True][0].to_dict().iteritems()]
-	## get full dictionary for every trait
-	def group(self, df):
-		fullYes = {} ## scores for all "yes"
-		fullNo = {} ## scores for all "no"
-		trait = ["EXT", "NEU", "AGR", "CON", "OPN"]
-		## get unmerged dict
-		for each in trait:
-			print "process trait: ", each
-			fullYes[each] = self.compare(df, each, 1)
-			fullNo[each] = self.compare(df, each, 0)
-		return(fullYes, fullNo)
 x = trainBuild()
 x.getValues()
 x.getStatusProcessed()
