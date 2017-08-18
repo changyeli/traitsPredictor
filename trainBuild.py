@@ -35,8 +35,13 @@ class trainBuild:
 		label_delete = [i for i, v in enumerate(status) if not v]
 		self.data.drop(label_delete, inplace = True)
 		## update train dataset
-		self.data.to_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV1.csv", index = False)
-		## form into numerical dataframe
+		self.data.to_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV1.csv", index = False, header = False)
+		mat = [] ## store processed numerical vectors
+		for index, row in self.data.iterrows():
+			mat.append(status[index] + row[2:].values.tolist())
+		## write to file
+		pd.DataFrame(mat).to_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv", index = False, header = False)
+
 	## TODO:get attribute vectors by ID
 	
 	## get valid median score for a specific trait, which |median - mean| <= 0.05
