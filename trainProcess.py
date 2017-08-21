@@ -51,8 +51,6 @@ class trainProcess:
 			print("Gradient Boosting Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 			print "\n"
-	## TODO: training model process, regression
-	
 		
 x = trainProcess()
 x.trainModelLabel()
