@@ -1,10 +1,6 @@
-## import packages
-import pandas as pd 
-import numpy as np 
+import pandas
 import pickle
-from sklearn.neural_network import MLPClassifier
 from sklearn import linear_model
-from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.naive_bayes import BernoulliNB
@@ -12,7 +8,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
 class trainProcess:
 	def __init__(self):
-		self.data = pd.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv")
+		self.data = pandas.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv")
 		self.label = [15, 16, 17, 18, 19] ## labeled traits column indexes
 		self.score = [10, 11, 12, 13, 14] ## scored traits column indexes
 		self.train = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] ## train data column indexes
@@ -24,6 +20,8 @@ class trainProcess:
 		name = ["ext", "neu", "agr", "con", "opn"]
 		## iterate each trait
 		for trait in self.label:
+			result = {} ## validation result
+			models = {} ## store best-fitting model
 			label = self.data.iloc[:, trait]
 			print "processing trait: ", name[self.label.index(trait)]
 			############################################################
