@@ -21,13 +21,6 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 For each trait, model with the highest 10-fold cross validation f1 score will be selected.
 
-- Openness: Random Forest with f1 score 0.83; standatd deviation up to 0.01.
-- Conscientiousness: Gradient Boosting with f1 score 0.53; standard deviation up to 0.03.
-- Extroversion: Bernoulli Naive Bayes with f1 score 0.57; standard deviation up tp 0.
-- Agreeableness: Random Forest with f1 score 0.62; standard deviaiton up to 0.03
-- Neuroticism: Multinomial Naive Bayes, with f1 score 0.62; standard deviation up to 0.02.
-
-
 
 ## Data
 
