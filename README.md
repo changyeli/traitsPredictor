@@ -2,7 +2,7 @@
 
 ## Brief Introduction
 
-This is a simple Python personality predictor. Basically, it will cluster all users with Big Five test style, and try to group users by the same trait.
+This is a simple Python personality predictor. Basically, it will cluster users using Big Five test style classification, and try to group users by the same trait to assign trait scores.
 
 ## Features
 - Predicting users' personality traits.
@@ -10,21 +10,40 @@ This is a simple Python personality predictor. Basically, it will cluster all us
 
 ## Methods
 
+### Data Pre-processing
+
 - Unigram
+- Word frequency
+
+### Classification
+
 - Stochastic Gradient Descent
 - Random Forest
 - Multinomial Naive Bayes
 - Bernoulli Naive Bayes
 - Gradient Boost
 
+### Regression
+
+- Ridge regression
+- Lasso regression
+- SGD regression
+- Random Forest regression
+- KNN regression
+- Gradient Boosting regression
+- Decision Tree regression
+
 ## Model Selection
 
-For each trait, model with the highest 10-fold cross validation f1 score will be selected.
+For each trait:
+- Classification: model with the highest 10-fold cross validation f1 score will be selected.
+- Regression: model with the lowest MSE and MAE will be selected.
+- Grouping: taking median as score, if the absolute difference between mean and median is less than 0.1. Median will be assigned to classified test and validation data.
 
 
 ## Data
 
-User selection is randomly selected from [here](http://friendorfollow.com/twitter/most-followers/), and the word feature data is collected from [here](https://github.com/mhbashari/NRC-Persian-Lexicon). For the training data, is collected from [here](http://mypersonality.org/wiki/doku.php?id=download_databases).
+Validation user selection is randomly selected from [here](http://friendorfollow.com/twitter/most-followers/), and the word feature data is collected from [here](https://github.com/mhbashari/NRC-Persian-Lexicon). For the training data, is collected from [here](http://mypersonality.org/wiki/doku.php?id=download_databases).
 
 
 
@@ -36,7 +55,9 @@ User selection is randomly selected from [here](http://friendorfollow.com/twitte
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.
+	- Grouping scores from same labeled trait in training dataset. 
 - ```trainBuild.py```: training data pre-process and associated I/O.
+- ```modelRun.py```: model application on validation dataset.
 
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
