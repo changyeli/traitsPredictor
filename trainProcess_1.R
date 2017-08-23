@@ -23,9 +23,20 @@ neuN = neuN[, 1:15]
 agrY = agrY[, 1:15]
 agrN = agrN[, 1:15]
 conY = conY[, 1:15]
-conN = conY[, 1:15]
+conN = conN[, 1:15]
 opnY = opnY[, 1:15]
 opnN = opnN[, 1:15]
+##################################
+extY = extY[, -1:-10]
+extN = extN[, -1:-10]
+neuY = neuY[, -1:-10]
+neuN = neuN[, -1:-10]
+agrY = agrY[, -1:-10]
+agrN = agrN[, -1:-10]
+conY = conY[, -1:-10]
+conN = conN[, -1:-10]
+opnY = opnY[, -1:-10]
+opnN = opnN[, -1:-10]
 ##################################
 write_csv(extY, "extY.csv")
 write_csv(extN, "extN.csv")
@@ -37,3 +48,4 @@ write_csv(opnY, "opnY.csv")
 write_csv(opnN, "opnN.csv")
 write_csv(conY, "conY.csv")
 write_csv(conN, "conN.csv")
+
