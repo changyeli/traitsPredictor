@@ -37,7 +37,7 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 
 For each trait:
 - Classification: model with the highest 10-fold cross validation f1 score will be selected.
-- Regression: model with the lowest MSE and MAE will be selected.
+- Regression: model with the lowest MSE will be selected.
 - Grouping: taking median as score, if the absolute difference between mean and median is less than 0.1. Median will be assigned to classified test and validation data.
 
 
@@ -55,7 +55,7 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.
-	- Grouping scores from same labeled trait in training dataset. 
+- ```trainProcess_1.R```: data subsetting using R. Python's dataframe is bit hard to use...
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
 
