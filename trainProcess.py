@@ -2,15 +2,14 @@ import pandas
 import pickle
 from sklearn import linear_model
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import mean_absolute_error,mean_squared_error,make_scorer
+from sklearn.metrics import mean_squared_error,make_scorer
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn import tree
+
 class trainProcess:
 	def __init__(self):
 		self.data = pandas.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv")
@@ -86,37 +85,29 @@ class trainProcess:
 		mse = make_scorer(mean_squared_error)
 		#########################################
 		## Lasso regression
-		clf = linear_model.Lasso(alpha = 0.8)
+		clf = linear_model.Lasso(alpha = 0.2)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("Lasso Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		#########################################
-		## Support vector regression
-		clf = linear_model.SGDRegressor(loss = "huber", penalty = "elasticnet")
+		## SGD regressor
+		clf = linear_model.SGDRegressor(loss = "epsilon_insensitive", penalty = "l2")
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("SGD Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
-		########################################
-		## Random Forest regression
-		clf = RandomForestRegressor(criterion = "mse", n_estimators = 50)
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
-		print("Random Forest Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		#########################################
 		## KNN regression
-		clf = KNeighborsRegressor(weights = "distance", algorithm = "kd_tree", n_jobs = -1)
+		clf = KNeighborsRegressor(weights = "distance", algorithm = "auto", n_jobs = -1)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("KNN Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		#########################################
 		## Baysian Ridge regression
-		clf = GradientBoostingRegressor(loss = "lad", n_estimators = 1000)
+		clf = GradientBoostingRegressor(loss = "huber", n_estimators = 100)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("Gradient Boosting Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
-		########################################
-		## decision tree regression
-		clf = tree.DecisionTreeRegressor(criterion = "friedman_mse")
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
-		print("Decision Tree Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		print "\n"
+		
 x = trainProcess()
 names = ["ext", "neu", "agr", "opn", "con"]
+#model = x.trainModelLabel()
 for item in names:
 	print "Processing trait: ", item
 	print "classified as yes"
