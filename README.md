@@ -25,13 +25,10 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 
 ### Regression
 
-- Ridge regression
 - Lasso regression
 - SGD regression
-- Random Forest regression
 - KNN regression
 - Gradient Boosting regression
-- Decision Tree regression
 
 ## Model Selection
 
