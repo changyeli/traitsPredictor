@@ -55,6 +55,7 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
 
+
 ## Citation
 - Nasukawa, T., & Yi, J. (2003, October). Sentiment analysis: Capturing favorability using natural language processing. In Proceedings of the 2nd international conference on Knowledge capture (pp. 70-77). ACM.
 - Yang, H., & Li, Y. (2013). Identifying user needs from social media. IBM Research Division, San Jose, 11.
@@ -64,5 +65,4 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - Farnadi, G., Sitaraman, G., Sushmita, S., Celli, F., Kosinski, M., Stillwell, D., ... & De Cock, M. (2016). Computational personality recognition in social media. User modeling and user-adapted interaction, 26(2-3), 109-142.
 - Celli, F., Pianesi, F., Stillwell, D., & Kosinski, M. (2013, June). Workshop on computational personality recognition (shared task). In Proceedings of the Workshop on Computational Personality Recognition.
 - Banerjee, N., Chakraborty, D., Dasgupta, K., Joshi, A., Madan, S., Mittal, S., ... & Rai, A. (2009). Contextual analysis of user interests in social media sites-An exploration with micro-blogs. IBM Research Report-RI 09012.
-- Poppe, O., Lei, C., Ahmed, S., & Rundensteiner, E. A. (2017, May). Complete Event Trend Detection in High-Rate Event Streams. In Proceedings of the 2017 ACM International Conference on Management of Data (pp. 109-124). ACM.
 

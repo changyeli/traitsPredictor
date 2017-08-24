@@ -73,6 +73,9 @@ class trainProcess:
 			s[trait] = models[h]
 		return s
 	## training model process, regression
+	## input: trait name
+	## label status: y for yes (1), n for no (0)
+	## output: the best-fitting model
 	def trainModelRegression(self, trait, status):
 		root = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
 		file_name = trait.lower() + status.upper() + ".csv"
@@ -83,28 +86,41 @@ class trainProcess:
 		label = dt[[name]]
 		## evaluation metrics
 		mse = make_scorer(mean_squared_error)
+		## model storage
+		s = {} ## trait name as key, model as value
+		s_mean = {} ## model name as key, mean as value
 		#########################################
 		## Lasso regression
 		clf = linear_model.Lasso(alpha = 0.2)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("Lasso Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["lasso"] = pickle.dumps(clf)
+		s_mean["lasso"] = score2.mean()
 		#########################################
 		## SGD regressor
 		clf = linear_model.SGDRegressor(loss = "epsilon_insensitive", penalty = "l2")
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("SGD Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["sgd"] = pickle.dumps(clf)
+		s_mean["sgd"] = score2.mean()
 		#########################################
 		## KNN regression
 		clf = KNeighborsRegressor(weights = "distance", algorithm = "auto", n_jobs = -1)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("KNN Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["knn"] = pickle.dumps(clf)
+		s_mean["knn"] = score2.mean()
 		#########################################
 		## Baysian Ridge regression
 		clf = GradientBoostingRegressor(loss = "huber", n_estimators = 100)
 		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
 		print("Gradient Boosting Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["gb"] = pickle.dumps(clf)
+		s_mean["gb"] = score2.mean()
+		h = min(s_mean, key = s_mean.get)
+		#print min(s_sd, key = s_sd.get)
 		print "\n"
-		
+		return s[h]
 x = trainProcess()
 names = ["ext", "neu", "agr", "opn", "con"]
 #model = x.trainModelLabel()
