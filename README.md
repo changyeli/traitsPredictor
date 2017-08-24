@@ -38,7 +38,6 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 For each trait:
 - Classification: model with the highest 10-fold cross validation f1 score will be selected.
 - Regression: model with the lowest MSE will be selected.
-- Grouping: taking median as score, if the absolute difference between mean and median is less than 0.1. Median will be assigned to classified test and validation data.
 
 
 ## Data
@@ -55,7 +54,7 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.
-- ```trainProcess_1.R```: data subsetting using R. Python's dataframe is bit hard to use...
+- ```trainProcess_1.R```: data subsetting using R.
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
 
@@ -67,4 +66,6 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - Mohammad, S., Zhu, X., Martin, J.: Semantic role labeling of emotions in tweets. In: Proceedings of the WASSA, pp. 32–41 (2014)
 - Farnadi, G., Sitaraman, G., Sushmita, S., Celli, F., Kosinski, M., Stillwell, D., ... & De Cock, M. (2016). Computational personality recognition in social media. User modeling and user-adapted interaction, 26(2-3), 109-142.
 - Celli, F., Pianesi, F., Stillwell, D., & Kosinski, M. (2013, June). Workshop on computational personality recognition (shared task). In Proceedings of the Workshop on Computational Personality Recognition.
+- Banerjee, N., Chakraborty, D., Dasgupta, K., Joshi, A., Madan, S., Mittal, S., ... & Rai, A. (2009). Contextual analysis of user interests in social media sites-An exploration with micro-blogs. IBM Research Report-RI 09012.
+- Poppe, O., Lei, C., Ahmed, S., & Rundensteiner, E. A. (2017, May). Complete Event Trend Detection in High-Rate Event Streams. In Proceedings of the 2017 ACM International Conference on Management of Data (pp. 109-124). ACM.
 
