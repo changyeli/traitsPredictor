@@ -16,6 +16,9 @@ class trainProcess:
 		self.label = [15, 16, 17, 18, 19] ## labeled traits column indexes
 		self.score = [10, 11, 12, 13, 14] ## scored traits column indexes
 		self.train = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] ## train data column indexes
+		self.modelYes = {}
+		self.modelNo = {}
+		self.name = ["ext", "neu", "agr", "con", "opn"]
 		## the labeled traits are [cEXT, cNEU, cAGR, cCON, cOPN] -> [15, 16, 17, 18, 19]
 		## the scored traits are [sECT, sNEU, sAGR, sCON, sOPN] -> [10, 11, 12, 13, 14]
 	## training model process, classification
@@ -24,14 +27,13 @@ class trainProcess:
 	## output: the best-fitted model for each trait
 	def trainModelLabel(self):
 		sample = self.data.iloc[:, self.train]
-		name = ["ext", "neu", "agr", "con", "opn"]
 		s = {} ## best model for each trait, with trait name as key, model as value
 		## iterate each trait
 		for trait in self.label:
 			result = {} ## validation result
 			models = {} ## store best-fitting model
 			label = self.data.iloc[:, trait]
-			print "processing trait: ", name[self.label.index(trait)]
+			print "processing trait: ", self.name[self.label.index(trait)]
 			############################################################
 			## SGD
 			clf = linear_model.SGDClassifier(loss = "log", penalty = "elasticnet")
@@ -70,7 +72,7 @@ class trainProcess:
 			print "\n"
 			## find the highest f1 score and associated model, store it to output dict
 			h = max(result, key = result.get)
-			s[trait] = models[h]
+			s[trait] = pickle.loads(models[h])
 		return s
 	## training model process, regression
 	## input: trait name
@@ -122,13 +124,8 @@ class trainProcess:
 		print "\n"
 		return pickle.loads(s[h])
 	## save the best-fitting model for regression model
+	## output: update model storage
 	def saveModel(self):
-		names = ["ext", "neu", "agr", "opn", "con"] ## trait names
-		modelYes = {}
-		modelNo = {}
-		## model for yes
-		for item in names:
-			modelYes[item] = self.trainModelRegression(item, "y")
-			modelNo[item] = self.trainModelRegression(item, "n")
-x = trainProcess()
-x.saveModel()
+		for item in self.name:
+			self.modelYes[item] = self.trainModelRegression(item, "y")
+			self.modelNo[item] = self.trainModelRegression(item, "n")
