@@ -118,15 +118,17 @@ class trainProcess:
 		s["gb"] = pickle.dumps(clf)
 		s_mean["gb"] = score2.mean()
 		h = min(s_mean, key = s_mean.get)
-		#print min(s_sd, key = s_sd.get)
+		print h
 		print "\n"
-		return s[h]
+		return pickle.loads(s[h])
+	## save the best-fitting model for regression model
+	def saveModel(self):
+		names = ["ext", "neu", "agr", "opn", "con"] ## trait names
+		modelYes = {}
+		modelNo = {}
+		## model for yes
+		for item in names:
+			modelYes[item] = self.trainModelRegression(item, "y")
+			modelNo[item] = self.trainModelRegression(item, "n")
 x = trainProcess()
-names = ["ext", "neu", "agr", "opn", "con"]
-#model = x.trainModelLabel()
-for item in names:
-	print "Processing trait: ", item
-	print "classified as yes"
-	x.trainModelRegression(item, "y")
-	print "classified as no"
-	x.trainModelRegression(item, "n")
+x.saveModel()
