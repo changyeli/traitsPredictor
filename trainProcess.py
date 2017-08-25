@@ -38,7 +38,7 @@ class trainProcess:
 			## SGD
 			clf = linear_model.SGDClassifier(loss = "log", penalty = "elasticnet")
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 10, scoring = "f1")
+			scores = cross_val_score(clf, sample, label, cv = 5, scoring = "f1")
 			print("SGD Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["SGD"] = scores.mean()
 			models["SGD"] = pickle.dumps(clf)
@@ -46,7 +46,7 @@ class trainProcess:
 			## Random Forest
 			clf = RandomForestClassifier(criterion = "entropy", n_estimators = 30)
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 10, scoring = "f1")
+			scores = cross_val_score(clf, sample, label, cv = 5, scoring = "f1")
 			print("Random Forest Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["RF"] = scores.mean()
 			models["RF"] = pickle.dumps(clf)
@@ -54,7 +54,7 @@ class trainProcess:
 			## multinomial nb
 			clf = MultinomialNB()
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 10)
+			scores = cross_val_score(clf, sample, label, cv = 5)
 			print("Multinomial NB Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["MNB"] = scores.mean()
 			models["MNB"] = pickle.dumps(clf)
@@ -62,7 +62,7 @@ class trainProcess:
 			## bernoulli nb
 			clf = BernoulliNB()
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 10)
+			scores = cross_val_score(clf, sample, label, cv = 5)
 			print("Bernoulli NB Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["BNB"] = scores.mean()
 			models["BNB"] = pickle.dumps(clf)
@@ -70,7 +70,7 @@ class trainProcess:
 			## gradient tree boosting
 			clf = GradientBoostingClassifier(loss = "deviance", n_estimators = 200, criterion = "mse")
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 10)
+			scores = cross_val_score(clf, sample, label, cv = 5)
 			print("Gradient Boosting Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["GB"] = scores.mean()
 			models["GB"] = pickle.dumps(clf)
@@ -100,7 +100,7 @@ class trainProcess:
 		## Lasso regression
 		clf = linear_model.Lasso(alpha = 0.2)
 		clf.fit(sample, label)
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("Lasso Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["lasso"] = pickle.dumps(clf)
 		s_mean["lasso"] = score2.mean()
@@ -108,7 +108,7 @@ class trainProcess:
 		## SGD regressor
 		clf = linear_model.SGDRegressor(loss = "epsilon_insensitive", penalty = "l2")
 		clf.fit(sample, label)
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("SGD Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["sgd"] = pickle.dumps(clf)
 		s_mean["sgd"] = score2.mean()
@@ -116,7 +116,7 @@ class trainProcess:
 		## KNN regression
 		clf = KNeighborsRegressor(weights = "distance", algorithm = "auto", n_jobs = -1)
 		clf.fit(sample, label)
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("KNN Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["knn"] = pickle.dumps(clf)
 		s_mean["knn"] = score2.mean()
@@ -124,7 +124,7 @@ class trainProcess:
 		## Baysian Ridge regression
 		clf = GradientBoostingRegressor(loss = "huber", n_estimators = 100)
 		clf.fit(sample, label)
-		score2 = cross_val_score(clf, sample, label, cv = 10, scoring = mse)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("Gradient Boosting Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["gb"] = pickle.dumps(clf)
 		s_mean["gb"] = score2.mean()
@@ -135,5 +135,6 @@ class trainProcess:
 	## output: update model storage
 	def saveModel(self):
 		for item in self.name:
+			print "processing regression model on trait: ", item
 			self.modelYes[item] = pickle.dumps(self.trainModelRegression(item, "y"))
 			self.modelNo[item] = pickle.dumps(self.trainModelRegression(item, "n"))
