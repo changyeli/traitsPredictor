@@ -2,6 +2,7 @@ import os
 import pickle
 import pandas as pd
 from trainProcess import trainProcess
+from scipy.stats import mode
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
@@ -33,10 +34,15 @@ class modelRun:
 		s = self.path + user
 		dt = pd.read_csv(s)
 		for item in self.name:
+			print "processing trait:", item
 			pre = pickle.loads(self.label_model[item]).predict(dt)
-			print pre
+			print mode(pre), len(pre)
 	## TODO: get regression socres based on classified label
 	## TODO: group all scores
 x = modelRun()
+docs = x.getDocs()
 x.getModel()
-x.getTrained("BillGates.csv")
+for files in docs:
+	print "processing validation user file: ", files
+	x.getTrained(files)
+	print "\n"
