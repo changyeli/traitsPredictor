@@ -88,7 +88,7 @@ class trainProcess:
 		sample = pandas.read_csv(root + file_name)
 		name = "s" + trait.upper()
 		dt = pandas.read_csv(root + file_name)
-		sample = dt.iloc[:, 1:10]
+		sample = dt.iloc[:, 0:9]
 		label = dt[[name]]
 		## evaluation metrics
 		mse = make_scorer(mean_squared_error)

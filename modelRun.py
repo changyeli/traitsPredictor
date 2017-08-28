@@ -53,17 +53,23 @@ class modelRun:
 	## TODO: get regression socres based on classified label
 	## apply regression model on classified dataset
 	## user: validation user's processed data to scan, gathered from getDocs
-	def getRegressed(self, user):
+	## trait: trait to be regressed
+	## statis: predicted label, 1 for yes, N for 0
+	def getRegressed(self, user, trait, status):
 		s = self.root + user
 		df = pd.read_csv(s)
-		for item in self.name:
-			item = item.upper()
-		print df[df.EXT == 1].ix[:, :"trust"]
+		sample = df[df[trait] == status]
+		sample = sample.ix[:, :"trust"]
+		pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
+		print mode(pre)
+		
 	## TODO: group all scores
 x = modelRun()
 docs = x.getDocs()
 x.getModel()
-for files in docs:
-	print "processing validation user file: ", files
-	x.getTrained(files)
-	print "\n"
+#for files in docs:
+#	print "processing validation user file: ", files
+#	x.getTrained(files)
+#	print "\n"
+for user in docs:
+	x.getRegressed(user, "ext", 1)
