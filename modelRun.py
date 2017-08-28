@@ -1,11 +1,13 @@
 import os
 import pickle
 import pandas as pd
+import numpy as np
 from trainProcess import trainProcess
 from scipy.stats import mode
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
+		self.root = "/Users/changye.li/Documents/scripts/traitsPredictor/predict/"
 		self.label_model = {} ## to store classfication model
 		self.modelYes = {} ## to store regression "yes" model
 		self.modelNo = {} ## to store regression "no" model
@@ -33,10 +35,21 @@ class modelRun:
 	def getTrained(self, user):
 		s = self.path + user
 		dt = pd.read_csv(s)
+		pred = []
 		for item in self.name:
 			print "processing trait:", item
-			pre = pickle.loads(self.label_model[item]).predict(dt)
+			pre = pickle.loads(self.label_model[item]).predict(dt).tolist()
+			pred.append(pre)
 			print mode(pre), len(pre)
+		pred = np.matrix(np.array(pred))
+		mat = pd.concat([dt, pd.DataFrame(pred.transpose())], axis = 1)
+		mat.columns = ['anticipation', 'joy', 'negative', 'sadness', 
+			'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust',
+			'EXT', 'NEU', 'AGR', 'CON', 'OPN']
+		## write to file
+		s1 = self.root + user
+		mat.to_csv(s1, index = False)
+		print "Finish writing to file"
 	## TODO: get regression socres based on classified label
 	## TODO: group all scores
 x = modelRun()

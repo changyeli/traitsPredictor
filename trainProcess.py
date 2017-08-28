@@ -9,7 +9,6 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_squared_error,make_scorer
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import GradientBoostingRegressor
-
 class trainProcess:
 	def __init__(self):
 		self.data = pandas.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv")
