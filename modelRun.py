@@ -31,7 +31,7 @@ class modelRun:
 		self.modelYes = m.modelYes
 		self.modelNo = m.modelNo
 	## apply trained model on validation dataset
-	## user: user processed data to scan, gathered from getDocs
+	## user: user's processed data to scan, gathered from getDocs
 	def getTrained(self, user):
 		s = self.path + user
 		dt = pd.read_csv(s)
@@ -45,12 +45,20 @@ class modelRun:
 		mat = pd.concat([dt, pd.DataFrame(pred.transpose())], axis = 1)
 		mat.columns = ['anticipation', 'joy', 'negative', 'sadness', 
 			'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust',
-			'EXT', 'NEU', 'AGR', 'CON', 'OPN']
+			'ext', 'neu', 'agr', 'con', 'opn']
 		## write to file
 		s1 = self.root + user
 		mat.to_csv(s1, index = False)
 		print "Finish writing to file"
 	## TODO: get regression socres based on classified label
+	## apply regression model on classified dataset
+	## user: validation user's processed data to scan, gathered from getDocs
+	def getRegressed(self, user):
+		s = self.root + user
+		df = pd.read_csv(s)
+		for item in self.name:
+			item = item.upper()
+		print df[df.EXT == 1].ix[:, :"trust"]
 	## TODO: group all scores
 x = modelRun()
 docs = x.getDocs()
