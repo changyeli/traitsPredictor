@@ -88,7 +88,7 @@ class trainProcess:
 		sample = pandas.read_csv(root + file_name)
 		name = "s" + trait.upper()
 		dt = pandas.read_csv(root + file_name)
-		sample = dt.iloc[:, 0:9]
+		sample = dt.ix[:, 0:10]
 		label = dt[[name]]
 		## evaluation metrics
 		mse = make_scorer(mean_squared_error)
@@ -135,5 +135,7 @@ class trainProcess:
 	def saveModel(self):
 		for item in self.name:
 			print "processing regression model on trait: ", item
+			print "classified as yes"
 			self.modelYes[item] = pickle.dumps(self.trainModelRegression(item, "y"))
+			print "classified as no"
 			self.modelNo[item] = pickle.dumps(self.trainModelRegression(item, "n"))

@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from trainProcess import trainProcess
 from scipy.stats import mode
+from scipy.stats import describe
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
@@ -59,17 +60,22 @@ class modelRun:
 		s = self.root + user
 		df = pd.read_csv(s)
 		sample = df[df[trait] == status]
-		sample = sample.ix[:, :"trust"]
-		pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
-		print mode(pre)
+		sample = sample.ix[:, 0:10]
+		pre = []
+		if(status == 1):
+			pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
+		else:
+			pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
+		print describe(pre)
 		
 	## TODO: group all scores
 x = modelRun()
 docs = x.getDocs()
 x.getModel()
-#for files in docs:
-#	print "processing validation user file: ", files
-#	x.getTrained(files)
-#	print "\n"
+for files in docs:
+	print "processing validation user file: ", files
+	x.getTrained(files)
+	print "\n"
 for user in docs:
-	x.getRegressed(user, "ext", 1)
+	x.getRegressed(user, "opn", 1)
+	x.getRegressed(user, "opn", 0)
