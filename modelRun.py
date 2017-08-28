@@ -38,20 +38,17 @@ class modelRun:
 		dt = pd.read_csv(s)
 		pred = []
 		for item in self.name:
-			print "processing trait:", item
 			pre = pickle.loads(self.label_model[item]).predict(dt).tolist()
 			pred.append(pre)
-			print mode(pre), len(pre)
 		pred = np.matrix(np.array(pred))
 		mat = pd.concat([dt, pd.DataFrame(pred.transpose())], axis = 1)
 		mat.columns = ['anticipation', 'joy', 'negative', 'sadness', 
 			'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust',
 			'ext', 'neu', 'agr', 'con', 'opn']
 		## write to file
-		s1 = self.root + user
-		mat.to_csv(s1, index = False)
-		print "Finish writing to file"
-	## TODO: get regression socres based on classified label
+		#s1 = self.root + user
+		#mat.to_csv(s1, index = False)
+		#print "Finish writing to file"
 	## apply regression model on classified dataset
 	## user: validation user's processed data to scan, gathered from getDocs
 	## trait: trait to be regressed
@@ -66,16 +63,25 @@ class modelRun:
 			pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
 		else:
 			pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
-		print describe(pre)
-		
-	## TODO: group all scores
+		return pre
+	## get "final" score for each trait for each user
+	## a driver function for this class
+	def getRated(self):
+		self.getModel()
+		docs = self.getDocs()
+		for files in docs:
+			print "processing validation user file: ", files
+			self.getTrained(files)
+		traits = ['ext', 'neu', 'agr', 'con', 'opn']
+		for user in docs:
+			print "processing user: ", user
+			scores = []
+			for each in traits:
+				pre1 = self.getRegressed(user, each, 1)
+				pre2 = self.getRegressed(user, each, 0)
+				s = (np.mean(pre1)*len(pre1) + np.mean(pre2)*len(pre2))/(len(pre1) + len(pre2))
+				scores.append(s)
+			print scores
+
 x = modelRun()
-docs = x.getDocs()
-x.getModel()
-for files in docs:
-	print "processing validation user file: ", files
-	x.getTrained(files)
-	print "\n"
-for user in docs:
-	x.getRegressed(user, "opn", 1)
-	x.getRegressed(user, "opn", 0)
+x.getRated()
