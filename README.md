@@ -33,7 +33,7 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 ## Model Selection
 
 For each trait:
-- Classification: model with the highest 10-fold cross validation f1 score will be selected.
+- Classification: model with the highest 5-fold cross validation f1 score will be selected.
 - Regression: model with the lowest MSE will be selected.
 
 
@@ -47,13 +47,18 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```fileProcess.py```: pulling data from twitter given some test usernames.
 - ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
 - ```featureExtraction.py```: feature extraction and I/O to better format.
-- ```featureBuild.py```: classifying users into clusters, using K-means, based on their tweets' feature. // no longer active.
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.
 - ```trainProcess_1.R```: data subsetting using R.
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
+
+## Limitations and Futher Direction
+
+1. In first version, only plain text that can be found in NRC word list is considered as training sample. For futher development, emoticon can be treated as an important feature. For example, XD, :D, ( ͡° ͜ʖ ͡°), (´･ω･`),（　ﾟ Дﾟ）, 😆, 🙄, can help us to understand the emotion behind the tweet greatly. However, some emoticons can be misleading, for example, this one → 🙂. *Update*: Found [this](https://github.com/wooorm/emoji-emotion) repo on GitHub, listing the polarity on some emoji.
+2. Also for V1, the final score for each trait is calculated using weighted mean; a better evaluation method should be implemented in further development. 
+3. Initially, a star graph, such as player attributes in NBA 2K and FIFA 17 ([like this one](https://cdn.pbrd.co/images/1mCEPr5r.png)), is the final output for this project. However I didn't find a suitable tool to visualize the final score. [d3.js](https://github.com/d3/d3) can be one of the solutions, but it's new to me; needs to take some time to learn it.
 
 
 ## Citation
