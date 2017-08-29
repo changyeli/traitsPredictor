@@ -28,7 +28,7 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 - Lasso regression
 - SGD regression
 - KNN regression
-- Gradient Boosting regression
+- Multi-layer Perceptron regression 
 
 ## Model Selection
 

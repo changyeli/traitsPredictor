@@ -72,13 +72,12 @@ class modelRun:
 	def getRated(self):
 		self.getModel()
 		docs = self.getDocs()
-		t = ['ext', 'neu', 'agr', 'opn']
 		for files in docs:
 			print "processing classification validation user file: ", files
 			self.getTrained(files)
 		for user in docs:
 			print "processing regression validation user file: ", user
-			for each in t:
+			for each in self.name:
 				print "processing trait: ", each
 				self.getRegressed(user, each, 1)
 				self.getRegressed(user, each, 0)

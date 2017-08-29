@@ -1,14 +1,12 @@
 import pandas
 import pickle
 from sklearn import linear_model
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.naive_bayes import BernoulliNB
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.naive_bayes import MultinomialNB, BernoulliNB
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_squared_error,make_scorer
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor, MLPClassifier
 class trainProcess:
 	def __init__(self):
 		self.data = pandas.read_csv("/Users/changye.li/Documents/scripts/traitsPredictor/clean/trainV2.csv")
@@ -73,7 +71,16 @@ class trainProcess:
 			print("Gradient Boosting Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["GB"] = scores.mean()
 			models["GB"] = pickle.dumps(clf)
+			#########################################################
+			## MLP
+			clf = MLPClassifier(hidden_layer_sizes = (500,), learning_rate = "invscaling", max_iter = 1000)
+			clf.fit(sample, label)
+			scores = cross_val_score(clf, sample, label, cv = 5)
+			print("MLP Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+			result["GB"] = scores.mean()
+			models["GB"] = pickle.dumps(clf)
 			print "\n"
+
 			## find the highest f1 score and associated model, store it to output dict
 			h = max(result, key = result.get)
 			s[self.name[self.label.index(trait)]] = pickle.dumps(pickle.loads(models[h]))
@@ -104,11 +111,11 @@ class trainProcess:
 		s["lasso"] = pickle.dumps(clf)
 		s_mean["lasso"] = score2.mean()
 		#########################################
-		## SGD regressor
-		clf = linear_model.SGDRegressor(loss = "epsilon_insensitive", penalty = "l2")
+		## Random Forest regressor
+		clf = RandomForestRegressor(n_estimators = 20, n_jobs = -1)
 		clf.fit(sample, label)
 		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
-		print("SGD Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		print("Random Forest Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["sgd"] = pickle.dumps(clf)
 		s_mean["sgd"] = score2.mean()
 		#########################################
@@ -120,13 +127,30 @@ class trainProcess:
 		s["knn"] = pickle.dumps(clf)
 		s_mean["knn"] = score2.mean()
 		#########################################
-		## Baysian Ridge regression
+		## MLP regression
+		clf = MLPRegressor(hidden_layer_sizes = (500,), learning_rate = "invscaling", max_iter = 1000)
+		clf.fit(sample, label)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
+		print("MLP Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["gb"] = pickle.dumps(clf)
+		s_mean["gb"] = score2.mean()
+		#########################################
+		## SGD regressor
+		clf = linear_model.SGDRegressor(loss = "epsilon_insensitive", penalty = "l2")
+		clf.fit(sample, label)
+		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
+		print("SGD Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
+		s["sgd"] = pickle.dumps(clf)
+		s_mean["sgd"] = score2.mean()
+		#########################################
+		## Gradient Boosting regression
 		clf = GradientBoostingRegressor(loss = "huber", n_estimators = 100)
 		clf.fit(sample, label)
 		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("Gradient Boosting Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
 		s["gb"] = pickle.dumps(clf)
 		s_mean["gb"] = score2.mean()
+		## find the lowest mse
 		h = min(s_mean, key = s_mean.get)
 		print "\n"
 		return pickle.loads(s[h])
