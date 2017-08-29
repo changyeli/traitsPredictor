@@ -34,7 +34,7 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 
 For each trait:
 - Classification: model with the highest 5-fold cross validation f1 score will be selected.
-- Regression: model with the lowest MSE will be selected.
+- Regression: model with the lowest 5-fold MSE will be selected.
 
 
 ## Data
@@ -56,9 +56,20 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 
 ## Limitations and Futher Direction
 
-1. In first version, only plain text that can be found in NRC word list is considered as training sample. For futher development, emoticon can be treated as an important feature. For example, XD, :D, ( ͡° ͜ʖ ͡°), (´･ω･`),（　ﾟ Дﾟ）, 😆, 🙄, can help us to understand the emotion behind the tweet greatly. However, some emoticons can be misleading, for example, this one → 🙂. *Update*: Found [this](https://github.com/wooorm/emoji-emotion) repo on GitHub, listing the polarity on some emoji.
-2. Also for V1, the final score for each trait is calculated using weighted mean; a better evaluation method should be implemented in further development. 
-3. Initially, a star graph, such as player attributes in NBA 2K and FIFA 17 ([like this one](https://cdn.pbrd.co/images/1mCEPr5r.png)), is the final output for this project. However I didn't find a suitable tool to visualize the final score. [d3.js](https://github.com/d3/d3) can be one of the solutions, but it's new to me; needs to take some time to learn it.
+### Data and Source
+
+1. There is few golden standard dataset public online, therefore the training dataset in V1 is limited. In futher development, we should look for a good resource of golden standard dataset.
+2. In first version, only plain text that can be found in NRC word list is considered as training sample. For futher development, emoticon can be treated as an important feature. For example, XD, :D, ( ͡° ͜ʖ ͡°), (´･ω･`),（　ﾟ Дﾟ）, 😆, 🙄, can help us to understand the emotion behind the tweet greatly. However, some emoticons can be misleading, for example, this one → 🙂. *Update*: Found [this](https://github.com/wooorm/emoji-emotion) repo on GitHub, listing the polarity on some emoji.
+
+### Method
+
+1. In V1, the final score for each trait is calculated using weighted mean; a better evaluation method should be implemented in further development. 
+2. In V1, single target regression is used to get predicted trait score. In futher development, multiple target regression can be implemented to reduce variance. Moreover, model selection for single target regression can be another way to improvement model. Due to limited training sample, model selection for single target regression is not performed in V1.
+
+### Output
+
+1. Initially, a star graph, such as player attributes in NBA 2K and FM 17 ([like this one](https://cdn.pbrd.co/images/1mCEPr5r.png)), is the final output for this project. However I didn't find a suitable tool to visualize the final score. [d3.js](https://github.com/d3/d3) can be one of the solutions, but it's new to me; needs to take some time to learn it.
+ 
 
 
 ## Citation
