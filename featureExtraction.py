@@ -1,4 +1,3 @@
-## import packages
 import os
 import csv
 ## class and functions

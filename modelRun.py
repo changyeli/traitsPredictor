@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 from trainProcess import trainProcess
 from scipy.stats import mode
-from scipy.stats import describe
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
@@ -39,6 +38,7 @@ class modelRun:
 		pred = []
 		for item in self.name:
 			pre = pickle.loads(self.label_model[item]).predict(dt).tolist()
+			print item, mode(pre), len(pre)
 			pred.append(pre)
 		pred = np.matrix(np.array(pred))
 		mat = pd.concat([dt, pd.DataFrame(pred.transpose())], axis = 1)
@@ -56,32 +56,31 @@ class modelRun:
 	def getRegressed(self, user, trait, status):
 		s = self.root + user
 		df = pd.read_csv(s)
-		sample = df[df[trait] == status]
-		sample = sample.ix[:, 0:10]
-		pre = []
-		if(status == 1):
-			pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
+		sample = df[df[trait] == status]## could be empty
+		if(not sample.empty):
+			sample = sample.iloc[:, 0:10]
+			if(status == 1):
+				pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
+				print np.mean(pre), len(pre)
+			else:
+				pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
+				print np.mean(pre), len(pre)
 		else:
-			pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
-		return pre
+			pass ## pass it, change to continue?
 	## get "final" score for each trait for each user
 	## a driver function for this class
 	def getRated(self):
 		self.getModel()
 		docs = self.getDocs()
+		t = ['ext', 'neu', 'agr', 'opn']
 		for files in docs:
-			print "processing validation user file: ", files
+			print "processing classification validation user file: ", files
 			self.getTrained(files)
-		traits = ['ext', 'neu', 'agr', 'con', 'opn']
 		for user in docs:
-			print "processing user: ", user
-			scores = []
-			for each in traits:
-				pre1 = self.getRegressed(user, each, 1)
-				pre2 = self.getRegressed(user, each, 0)
-				s = (np.mean(pre1)*len(pre1) + np.mean(pre2)*len(pre2))/(len(pre1) + len(pre2))
-				scores.append(s)
-			print scores
-
+			print "processing regression validation user file: ", user
+			for each in t:
+				print "processing trait: ", each
+				self.getRegressed(user, each, 1)
+				self.getRegressed(user, each, 0)
 x = modelRun()
 x.getRated()

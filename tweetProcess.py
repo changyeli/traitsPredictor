@@ -47,7 +47,6 @@ class tweetProcess:
 			s = filename[6:]
 			s = s[:-4]
 			pd.DataFrame(tweet).to_csv(self.process + s + ".csv", header = False, index = False)
-
 x = tweetProcess()
 docs = x.getFiles()
 better = x.getValues()
