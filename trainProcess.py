@@ -35,15 +35,15 @@ class trainProcess:
 			## SGD
 			clf = linear_model.SGDClassifier(loss = "log", penalty = "elasticnet")
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 5, scoring = "f1")
+			scores = cross_val_score(clf, sample, label, cv = 5)
 			print("SGD Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["SGD"] = scores.mean()
 			models["SGD"] = pickle.dumps(clf)
 			############################################################
 			## Random Forest
-			clf = RandomForestClassifier(criterion = "entropy", n_estimators = 30)
+			clf = RandomForestClassifier(criterion = "entropy", n_estimators = 100)
 			clf.fit(sample, label)
-			scores = cross_val_score(clf, sample, label, cv = 5, scoring = "f1")
+			scores = cross_val_score(clf, sample, label, cv = 5)
 			print("Random Forest Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 			result["RF"] = scores.mean()
 			models["RF"] = pickle.dumps(clf)
@@ -80,7 +80,6 @@ class trainProcess:
 			result["MLP"] = scores.mean()
 			models["MLP"] = pickle.dumps(clf)
 			print "\n"
-
 			## find the highest f1 score and associated model, store it to output dict
 			h = max(result, key = result.get)
 			s[self.name[self.label.index(trait)]] = pickle.dumps(pickle.loads(models[h]))
@@ -104,7 +103,7 @@ class trainProcess:
 		s_mean = {} ## model name as key, mean as value
 		#########################################
 		## Lasso regression
-		clf = linear_model.Lasso(alpha = 0.2)
+		clf = linear_model.Lasso(alpha = 0.7)
 		clf.fit(sample, label)
 		score2 = cross_val_score(clf, sample, label, cv = 5, scoring = mse)
 		print("Lasso Regression MSE: %0.2f (+/- %0.2f)" % (score2.mean(), score2.std() * 2))
