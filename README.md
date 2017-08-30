@@ -35,7 +35,7 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 ## Model Selection
 
 For each trait:
-- Classification: model with the highest 5-fold cross validation f1 score will be selected.
+- Classification: model with the highest 5-fold cross score will be selected.
 - Regression: model with the lowest 5-fold MSE will be selected.
 
 
@@ -67,6 +67,7 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 
 1. In V1, the final score for each trait is calculated using weighted mean; a better evaluation method should be implemented in further development. 
 2. In V1, single target regression is used to get predicted trait score. In futher development, multiple target regression can be implemented to reduce variance. Moreover, model selection for single target regression can be another way to improvement model. Due to limited training sample, model selection for single target regression is not performed in V1.
+3. As mentioned in ```Data and Source```, only plain text that can be found in NRC without Part-of-speech tagging. In futher development, POS can be applied on understanding tweets, to improve classfication and regression performance.
 
 ### Output
 
