@@ -61,12 +61,12 @@ class modelRun:
 			sample = sample.iloc[:, 0:10]
 			if(status == 1):
 				pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
-				print np.mean(pre), len(pre)
+				return pre
 			else:
 				pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
-				print np.mean(pre), len(pre)
+				return pre
 		else:
-			pass ## pass it, change to continue?
+			return [] ## return empty list to calculate score
 	## get "final" score for each trait for each user
 	## TODO: return weighted score for each predicted trait
 	## a driver function for this class
@@ -80,7 +80,9 @@ class modelRun:
 			print "processing regression validation user file: ", user
 			for each in self.name:
 				print "processing trait: ", each
-				self.getRegressed(user, each, 1)
-				self.getRegressed(user, each, 0)
+				pre1 = self.getRegressed(user, each, 1)
+				pre2 = self.getRegressed(user, each, 0)
+				score = (np.mean(pre1)*len(pre1) + np.mean(pre2)*len(pre2))/(len(pre1) + len(pre2))
+				print score
 x = modelRun()
 x.getRated()
