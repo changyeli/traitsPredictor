@@ -3,7 +3,6 @@ import pickle
 import pandas as pd
 import numpy as np
 from trainProcess import trainProcess
-from scipy.stats import mode
 class modelRun:
 	def __init__(self):
 		self.path = "/Users/changye.li/Documents/scripts/traitsPredictor/process/"
@@ -38,7 +37,6 @@ class modelRun:
 		pred = []
 		for item in self.name:
 			pre = pickle.loads(self.label_model[item]).predict(dt).tolist()
-			print item, mode(pre), len(pre)
 			pred.append(pre)
 		pred = np.matrix(np.array(pred))
 		mat = pd.concat([dt, pd.DataFrame(pred.transpose())], axis = 1)
@@ -57,7 +55,9 @@ class modelRun:
 		s = self.root + user
 		df = pd.read_csv(s)
 		sample = df[df[trait] == status]## could be empty
-		if(not sample.empty):
+		if(sample.empty):
+			return [0]
+		else:
 			sample = sample.iloc[:, 0:10]
 			if(status == 1):
 				pre = pickle.loads(self.modelYes[trait]).predict(sample).tolist()
@@ -65,8 +65,6 @@ class modelRun:
 			else:
 				pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
 				return pre
-		else:
-			return [] ## return empty list to calculate score
 	## get "final" score for each trait for each user
 	## TODO: return weighted score for each predicted trait
 	## a driver function for this class
@@ -78,11 +76,13 @@ class modelRun:
 			self.getTrained(files)
 		for user in docs:
 			print "processing regression validation user file: ", user
+			s = {}
 			for each in self.name:
-				print "processing trait: ", each
 				pre1 = self.getRegressed(user, each, 1)
 				pre2 = self.getRegressed(user, each, 0)
 				score = (np.mean(pre1)*len(pre1) + np.mean(pre2)*len(pre2))/(len(pre1) + len(pre2))
-				print score
+				s[each] = score
+			for k, v in s.iteritems():
+				print k, v
 x = modelRun()
 x.getRated()
