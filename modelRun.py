@@ -68,6 +68,7 @@ class modelRun:
 		else:
 			pass ## pass it, change to continue?
 	## get "final" score for each trait for each user
+	## TODO: return weighted score for each predicted trait
 	## a driver function for this class
 	def getRated(self):
 		self.getModel()

@@ -22,13 +22,15 @@ This is a simple Python personality predictor. Basically, it will cluster users 
 - Multinomial Naive Bayes
 - Bernoulli Naive Bayes
 - Gradient Boost
+- Multi-layer Perceptron
 
 ### Regression
 
-- Lasso regression
-- SGD regression
-- KNN regression
-- Multi-layer Perceptron regression 
+- Lasso 
+- SGD 
+- KNN
+- Multi-layer Perceptron 
+- Gradient Boost
 
 ## Model Selection
 
