@@ -86,16 +86,18 @@ class trainProcess:
 		return s
 	## training model process, regression
 	## input: trait name
-	## label status: y for yes (1), n for no (0)
+	## label status: 1 for yes, 0 for no
 	## output: the best-fitting model
 	def trainModelRegression(self, trait, status):
-		root = "/Users/changye.li/Documents/scripts/traitsPredictor/clean/"
-		file_name = trait.lower() + status.upper() + ".csv"
-		sample = pandas.read_csv(root + file_name)
-		name = "s" + trait.upper()
-		dt = pandas.read_csv(root + file_name)
-		sample = dt.iloc[:, 0:10]
-		label = dt[[name]]
+		sample = self.data.iloc[:, 0:10] ## training data
+		score = self.data.iloc[:, self.score[self.name.index(trait)]]
+		label = self.data.iloc[:, self.label[self.name.index(trait)]]
+		dt = pandas.concat([sample, score, label], axis = 1)
+		dt.columns = ['anticipation', 'joy', 'negative', 'sadness', 'disgust', 
+		'positive', 'anger', 'surprise', 'fear', 'trust', 'score', 'label']
+		sample = dt[dt['label'] == status]
+		label = sample.score
+		sample = sample.iloc[:, self.train]
 		## evaluation metrics
 		mse = make_scorer(mean_squared_error)
 		## model storage
@@ -159,6 +161,6 @@ class trainProcess:
 		for item in self.name:
 			print "processing regression model on trait: ", item
 			print "classified as yes"
-			self.modelYes[item] = pickle.dumps(self.trainModelRegression(item, "y"))
+			self.modelYes[item] = pickle.dumps(self.trainModelRegression(item, 1))
 			print "classified as no"
-			self.modelNo[item] = pickle.dumps(self.trainModelRegression(item, "n"))
+			self.modelNo[item] = pickle.dumps(self.trainModelRegression(item, 0))
