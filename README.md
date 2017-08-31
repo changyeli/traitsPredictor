@@ -48,7 +48,7 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 ## Files
 - ```fileProcess.py```: pulling data from twitter given some test usernames.
 - ```tweetProcess.py```: data processing of raw data pulled from ```fileProcess.py```
-- ```featureExtraction.py```: feature extraction and I/O to better format.
+- ```featureExtraction.py```: feature extraction and I/O to better format for NRC word list.
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.

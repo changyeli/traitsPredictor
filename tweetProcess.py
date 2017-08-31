@@ -26,7 +26,7 @@ class tweetProcess:
 			better[row[0]] = row[1:].values.tolist()
 			self.word.append(row[0])
 		return better
-	## read files and write all users' tweets into a list, with username as key for a dict
+	## read files and write all users' tweets
 	# input: filename to scan
 	# input: NRC word attributes
 	def readFiles(self, filename, values):
