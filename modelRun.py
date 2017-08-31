@@ -43,18 +43,13 @@ class modelRun:
 		mat.columns = ['anticipation', 'joy', 'negative', 'sadness', 
 			'disgust', 'positive', 'anger', 'surprise', 'fear', 'trust',
 			'ext', 'neu', 'agr', 'con', 'opn']
-		## write to file
-		#s1 = self.root + user
-		#mat.to_csv(s1, index = False)
-		#print "Finish writing to file"
+		return mat
 	## apply regression model on classified dataset
-	## user: validation user's processed data to scan, gathered from getDocs
+	## mat: dataframe from getTrained()
 	## trait: trait to be regressed
 	## statis: predicted label, 1 for yes, N for 0
-	def getRegressed(self, user, trait, status):
-		s = self.root + user
-		df = pd.read_csv(s)
-		sample = df[df[trait] == status]## could be empty
+	def getRegressed(self, mat, trait, status):
+		sample = mat[mat[trait] == status]## could be empty
 		if(sample.empty):
 			return [0]
 		else:
@@ -66,20 +61,18 @@ class modelRun:
 				pre = pickle.loads(self.modelNo[trait]).predict(sample).tolist()
 				return pre
 	## get "final" score for each trait for each user
-	## TODO: return weighted score for each predicted trait
 	## a driver function for this class
 	def getRated(self):
 		self.getModel()
 		docs = self.getDocs()
 		for files in docs:
 			print "processing classification validation user file: ", files
-			self.getTrained(files)
-		for user in docs:
-			print "processing regression validation user file: ", user
+			mat = self.getTrained(files)
+			print "processing regression validation user file: ", files
 			s = {}
 			for each in self.name:
-				pre1 = self.getRegressed(user, each, 1)
-				pre2 = self.getRegressed(user, each, 0)
+				pre1 = self.getRegressed(mat, each, 1)
+				pre2 = self.getRegressed(mat, each, 0)
 				score = (np.mean(pre1)*len(pre1) + np.mean(pre2)*len(pre2))/(len(pre1) + len(pre2))
 				s[each] = score
 			for k, v in s.iteritems():
