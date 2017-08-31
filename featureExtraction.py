@@ -44,7 +44,7 @@ class featureExtraction:
 	def readFiles(self):
 		for r, d, f in os.walk(self.root):
 			for files in f:
-				if files.endswith(".txt"):
+				if files.endswith(".csv"):
 					self.docs.append(files)
 	## extract user feature based on better-formatted feature vocabulary
 	def extractFeature(self):
