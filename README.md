@@ -52,7 +52,6 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```trainProcess.py```: training data process.
 	- Using Machine Learning techniques. This training process is aimed to predict traits' category, i.e., predict if user is an openness person.
 	- Using regression method to get score predictions for each trait.
-- ```trainProcess_1.R```: data subsetting using R.
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
 
