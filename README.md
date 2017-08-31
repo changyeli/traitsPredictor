@@ -62,9 +62,9 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 
 ```featureExtraction.py``` -> ```fileProcess.py``` -> ```tweetProcess.py```
 
-#### Training Data Processing
+#### Data Train, Test & Validation
 
-```trainBuild.py``` -> ```trainProcess.py``` -> ```trainProcess_1.R``` -> ```modelRun.py```
+```trainBuild.py``` -> ```modelRun.py```
 
 
 ## Limitations and Futher Direction
