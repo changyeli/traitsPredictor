@@ -1,4 +1,3 @@
-## import package
 import tweepy
 import re
 class fileProcess:

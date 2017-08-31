@@ -56,12 +56,24 @@ Validation user selection is randomly selected from [here](http://friendorfollow
 - ```trainBuild.py```: training data pre-process and associated I/O.
 - ```modelRun.py```: model application on validation dataset.
 
+### Flow of Scripts
+
+#### Get Validation Data
+
+```featureExtraction.py``` -> ```fileProcess.py``` -> ```tweetProcess.py```
+
+#### Training Data Processing
+
+```trainBuild.py``` -> ```trainProcess.py``` -> ```trainProcess_1.R``` -> ```modelRun.py```
+
+
 ## Limitations and Futher Direction
 
 ### Data and Source
 
 1. There is few golden standard dataset public online, therefore the training dataset in V1 is limited. In futher development, we should look for a good resource of golden standard dataset.
 2. In first version, only plain text that can be found in NRC word list is considered as training sample. For futher development, emoticon can be treated as an important feature. For example, XD, :D, ( ͡° ͜ʖ ͡°), (´･ω･`),（　ﾟ Дﾟ）, 😆, 🙄, can help us to understand the emotion behind the tweet greatly. However, some emoticons can be misleading, for example, this one → 🙂. *Update*: Found [this](https://github.com/wooorm/emoji-emotion) repo on GitHub, listing the polarity on some emoji.
+3. Also, all hashtags are removed from original dataset. This processing method could be *simple and violent*, 
 
 ### Method
 
