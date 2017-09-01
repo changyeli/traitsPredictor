@@ -1,0 +1,771 @@
+Changye-Li-iMac-5k:traitsPredictor changye.li$ python -W ignore modelRun.py
+processing trait:  ext
+SGD Accuracy: 0.51 (+/- 0.08)
+Random Forest Accuracy: 0.54 (+/- 0.01)
+Multinomial NB Accuracy: 0.56 (+/- 0.01)
+Bernoulli NB Accuracy: 0.56 (+/- 0.02)
+Gradient Boosting Accuracy: 0.56 (+/- 0.01)
+MLP Accuracy: 0.55 (+/- 0.03)
+
+
+processing trait:  neu
+SGD Accuracy: 0.59 (+/- 0.12)
+Random Forest Accuracy: 0.60 (+/- 0.01)
+Multinomial NB Accuracy: 0.62 (+/- 0.02)
+Bernoulli NB Accuracy: 0.63 (+/- 0.01)
+Gradient Boosting Accuracy: 0.62 (+/- 0.01)
+MLP Accuracy: 0.62 (+/- 0.01)
+
+
+processing trait:  agr
+SGD Accuracy: 0.52 (+/- 0.03)
+Random Forest Accuracy: 0.52 (+/- 0.02)
+Multinomial NB Accuracy: 0.53 (+/- 0.01)
+Bernoulli NB Accuracy: 0.52 (+/- 0.01)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.52 (+/- 0.01)
+
+
+processing trait:  con
+SGD Accuracy: 0.50 (+/- 0.05)
+Random Forest Accuracy: 0.51 (+/- 0.02)
+Multinomial NB Accuracy: 0.53 (+/- 0.04)
+Bernoulli NB Accuracy: 0.51 (+/- 0.04)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.52 (+/- 0.02)
+
+
+processing trait:  opn
+SGD Accuracy: 0.70 (+/- 0.18)
+Random Forest Accuracy: 0.72 (+/- 0.00)
+Multinomial NB Accuracy: 0.74 (+/- 0.00)
+Bernoulli NB Accuracy: 0.74 (+/- 0.02)
+Gradient Boosting Accuracy: 0.74 (+/- 0.01)
+MLP Accuracy: 0.74 (+/- 0.00)
+
+
+processing regression model on trait:  ext
+classified as yes
+Lasso Regression MSE: 0.16 (+/- 0.11)
+Random Forest Regression MSE: 0.18 (+/- 0.11)
+KNN Regression MSE: 0.21 (+/- 0.11)
+MLP Regression MSE: 0.17 (+/- 0.11)
+Gradient Boosting Regression MSE: 0.16 (+/- 0.11)
+SGD Regression MSE: 0.16 (+/- 0.11)
+
+
+classified as no
+Lasso Regression MSE: 0.36 (+/- 0.26)
+Random Forest Regression MSE: 0.40 (+/- 0.26)
+KNN Regression MSE: 0.45 (+/- 0.22)
+MLP Regression MSE: 0.37 (+/- 0.24)
+Gradient Boosting Regression MSE: 0.37 (+/- 0.28)
+SGD Regression MSE: 0.42 (+/- 0.42)
+
+
+processing regression model on trait:  neu
+classified as yes
+Lasso Regression MSE: 0.25 (+/- 0.09)
+Random Forest Regression MSE: 0.28 (+/- 0.09)
+KNN Regression MSE: 0.31 (+/- 0.10)
+MLP Regression MSE: 0.26 (+/- 0.08)
+Gradient Boosting Regression MSE: 0.26 (+/- 0.11)
+SGD Regression MSE: 0.28 (+/- 0.13)
+
+
+classified as no
+Lasso Regression MSE: 0.19 (+/- 0.03)
+Random Forest Regression MSE: 0.22 (+/- 0.02)
+KNN Regression MSE: 0.27 (+/- 0.02)
+MLP Regression MSE: 0.20 (+/- 0.02)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.02)
+SGD Regression MSE: 0.20 (+/- 0.03)
+
+
+processing regression model on trait:  agr
+classified as yes
+Lasso Regression MSE: 0.15 (+/- 0.12)
+Random Forest Regression MSE: 0.17 (+/- 0.12)
+KNN Regression MSE: 0.18 (+/- 0.12)
+MLP Regression MSE: 0.16 (+/- 0.12)
+Gradient Boosting Regression MSE: 0.15 (+/- 0.13)
+SGD Regression MSE: 0.15 (+/- 0.14)
+
+
+classified as no
+Lasso Regression MSE: 0.14 (+/- 0.04)
+Random Forest Regression MSE: 0.15 (+/- 0.04)
+KNN Regression MSE: 0.18 (+/- 0.05)
+MLP Regression MSE: 0.15 (+/- 0.05)
+Gradient Boosting Regression MSE: 0.14 (+/- 0.05)
+SGD Regression MSE: 0.14 (+/- 0.06)
+
+
+processing regression model on trait:  con
+classified as yes
+Lasso Regression MSE: 0.19 (+/- 0.11)
+Random Forest Regression MSE: 0.22 (+/- 0.11)
+KNN Regression MSE: 0.25 (+/- 0.09)
+MLP Regression MSE: 0.20 (+/- 0.11)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.10)
+SGD Regression MSE: 0.21 (+/- 0.08)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.15)
+Random Forest Regression MSE: 0.26 (+/- 0.15)
+KNN Regression MSE: 0.30 (+/- 0.14)
+MLP Regression MSE: 0.24 (+/- 0.17)
+Gradient Boosting Regression MSE: 0.23 (+/- 0.16)
+SGD Regression MSE: 0.24 (+/- 0.19)
+
+
+processing regression model on trait:  opn
+classified as yes
+Lasso Regression MSE: 0.10 (+/- 0.06)
+Random Forest Regression MSE: 0.11 (+/- 0.06)
+KNN Regression MSE: 0.13 (+/- 0.05)
+MLP Regression MSE: 0.11 (+/- 0.06)
+Gradient Boosting Regression MSE: 0.10 (+/- 0.06)
+SGD Regression MSE: 0.11 (+/- 0.06)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.10)
+Random Forest Regression MSE: 0.27 (+/- 0.10)
+KNN Regression MSE: 0.29 (+/- 0.11)
+MLP Regression MSE: 0.25 (+/- 0.13)
+Gradient Boosting Regression MSE: 0.25 (+/- 0.11)
+SGD Regression MSE: 0.27 (+/- 0.22)
+
+
+processing classification validation user file:  BillGates.csv
+processing regression validation user file:  BillGates.csv
+ext 2.80466683358
+neu 2.13281323671
+opn 4.39956666213
+agr 3.94682426761
+con 3.02225501146
+processing classification validation user file:  ConanOBrien.csv
+processing regression validation user file:  ConanOBrien.csv
+ext 2.78748108036
+neu 2.13298861608
+opn 4.39992843466
+agr 3.88377994872
+con 3.00910113651
+processing classification validation user file:  EmmaWatson.csv
+processing regression validation user file:  EmmaWatson.csv
+ext 2.81157372872
+neu 2.13201358352
+opn 4.3979171377
+agr 3.99308333433
+con 3.00531707686
+processing classification validation user file:  Google.csv
+processing regression validation user file:  Google.csv
+ext 2.77698955047
+neu 2.13304436142
+opn 4.40004342614
+agr 4.06675742691
+con 2.97368856362
+processing classification validation user file:  jimmyfallon.csv
+processing regression validation user file:  jimmyfallon.csv
+ext 2.79078405143
+neu 2.13297178392
+opn 4.39989371328
+agr 3.98842074
+con 2.97672934187
+processing classification validation user file:  katyperry.csv
+processing regression validation user file:  katyperry.csv
+ext 2.79547313572
+neu 2.13284714673
+opn 4.39963661171
+agr 3.99435340987
+con 2.97767155005
+processing classification validation user file:  LeoDiCaprio.csv
+processing regression validation user file:  LeoDiCaprio.csv
+ext 2.7975238574
+neu 2.13156580717
+opn 4.39699346476
+agr 3.94673349548
+con 3.0287121495
+processing classification validation user file:  MayoClinic.csv
+processing regression validation user file:  MayoClinic.csv
+ext 2.78122572801
+neu 2.13299734805
+opn 4.39994644696
+agr 3.89371594231
+con 2.99879238309
+processing classification validation user file:  nytimes.csv
+processing regression validation user file:  nytimes.csv
+ext 2.77697571125
+neu 2.13304561399
+opn 4.40004600994
+agr 3.81706573536
+con 3.03502735501
+processing classification validation user file:  Oprah.csv
+processing regression validation user file:  Oprah.csv
+ext 2.80508393149
+neu 2.13296451535
+opn 4.39987871968
+agr 4.03866930186
+con 2.99928529324
+processing classification validation user file:  Padilla_Comm.csv
+processing regression validation user file:  Padilla_Comm.csv
+ext 2.80121375383
+neu 2.13299710834
+opn 4.39994595249
+agr 4.05917509879
+con 2.9980296421
+processing classification validation user file:  rihanna.csv
+processing regression validation user file:  rihanna.csv
+ext 2.79276247104
+neu 2.1327227366
+opn 4.39937997852
+agr 3.95000288435
+con 2.97791260174
+processing classification validation user file:  taylorswift13.csv
+processing regression validation user file:  taylorswift13.csv
+ext 2.80216508205
+neu 2.13299662844
+opn 4.40106498638
+agr 3.99525783083
+con 2.98080608259
+processing classification validation user file:  TheEconomist.csv
+processing regression validation user file:  TheEconomist.csv
+ext 2.77667723282
+neu 2.1330326564
+opn 4.40001928102
+agr 3.84381967782
+con 2.99822534237
+Changye-Li-iMac-5k:traitsPredictor changye.li$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   trainProcess.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.DS_Store
+	.gitignore
+	PersonalityPredictor/
+	clean/.DS_Store
+	data/
+	mypersonality_final.csv
+	nltk_dl.py
+	trainBuild.pyc
+	trainProcess.pyc
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Changye-Li-iMac-5k:traitsPredictor changye.li$ git add -u
+Changye-Li-iMac-5k:traitsPredictor changye.li$ git commit -m 'subset update'
+[master be45447] subset update
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+Changye-Li-iMac-5k:traitsPredictor changye.li$ git push
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 582 bytes | 0 bytes/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/palooney/traitsPredictor.git
+   c305bb2..be45447  master -> master
+Changye-Li-iMac-5k:traitsPredictor changye.li$ python -W ignore modelRun.py
+processing trait:  ext
+SGD Accuracy: 0.54 (+/- 0.07)
+Random Forest Accuracy: 0.54 (+/- 0.01)
+Multinomial NB Accuracy: 0.56 (+/- 0.01)
+Bernoulli NB Accuracy: 0.56 (+/- 0.02)
+Gradient Boosting Accuracy: 0.56 (+/- 0.01)
+MLP Accuracy: 0.55 (+/- 0.04)
+
+
+processing trait:  neu
+SGD Accuracy: 0.59 (+/- 0.11)
+Random Forest Accuracy: 0.60 (+/- 0.01)
+Multinomial NB Accuracy: 0.62 (+/- 0.02)
+Bernoulli NB Accuracy: 0.63 (+/- 0.01)
+Gradient Boosting Accuracy: 0.62 (+/- 0.01)
+MLP Accuracy: 0.62 (+/- 0.01)
+
+
+processing trait:  agr
+SGD Accuracy: 0.50 (+/- 0.05)
+Random Forest Accuracy: 0.51 (+/- 0.02)
+Multinomial NB Accuracy: 0.53 (+/- 0.01)
+Bernoulli NB Accuracy: 0.52 (+/- 0.01)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.52 (+/- 0.01)
+
+
+processing trait:  con
+SGD Accuracy: 0.51 (+/- 0.07)
+Random Forest Accuracy: 0.51 (+/- 0.02)
+Multinomial NB Accuracy: 0.53 (+/- 0.04)
+Bernoulli NB Accuracy: 0.51 (+/- 0.04)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.53 (+/- 0.02)
+
+
+processing trait:  opn
+SGD Accuracy: 0.71 (+/- 0.14)
+Random Forest Accuracy: 0.72 (+/- 0.01)
+Multinomial NB Accuracy: 0.74 (+/- 0.00)
+Bernoulli NB Accuracy: 0.74 (+/- 0.02)
+Gradient Boosting Accuracy: 0.74 (+/- 0.01)
+MLP Accuracy: 0.74 (+/- 0.00)
+
+
+processing regression model on trait:  ext
+classified as yes
+Lasso Regression MSE: 0.16 (+/- 0.11)
+Random Forest Regression MSE: 0.18 (+/- 0.11)
+KNN Regression MSE: 0.21 (+/- 0.11)
+MLP Regression MSE: 0.16 (+/- 0.11)
+Gradient Boosting Regression MSE: 0.16 (+/- 0.11)
+SGD Regression MSE: 0.16 (+/- 0.11)
+
+
+classified as no
+Lasso Regression MSE: 0.36 (+/- 0.26)
+Random Forest Regression MSE: 0.40 (+/- 0.26)
+KNN Regression MSE: 0.45 (+/- 0.22)
+MLP Regression MSE: 0.38 (+/- 0.26)
+Gradient Boosting Regression MSE: 0.37 (+/- 0.28)
+SGD Regression MSE: 0.39 (+/- 0.36)
+
+
+processing regression model on trait:  neu
+classified as yes
+Lasso Regression MSE: 0.25 (+/- 0.09)
+Random Forest Regression MSE: 0.28 (+/- 0.09)
+KNN Regression MSE: 0.31 (+/- 0.10)
+MLP Regression MSE: 0.27 (+/- 0.07)
+Gradient Boosting Regression MSE: 0.26 (+/- 0.11)
+SGD Regression MSE: 0.28 (+/- 0.17)
+
+
+classified as no
+Lasso Regression MSE: 0.19 (+/- 0.03)
+Random Forest Regression MSE: 0.21 (+/- 0.02)
+KNN Regression MSE: 0.27 (+/- 0.02)
+MLP Regression MSE: 0.20 (+/- 0.02)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.02)
+SGD Regression MSE: 0.20 (+/- 0.01)
+
+
+processing regression model on trait:  agr
+classified as yes
+Lasso Regression MSE: 0.15 (+/- 0.12)
+Random Forest Regression MSE: 0.17 (+/- 0.12)
+KNN Regression MSE: 0.18 (+/- 0.12)
+MLP Regression MSE: 0.16 (+/- 0.12)
+Gradient Boosting Regression MSE: 0.16 (+/- 0.13)
+SGD Regression MSE: 0.16 (+/- 0.14)
+
+
+classified as no
+Lasso Regression MSE: 0.14 (+/- 0.04)
+Random Forest Regression MSE: 0.15 (+/- 0.04)
+KNN Regression MSE: 0.18 (+/- 0.05)
+MLP Regression MSE: 0.14 (+/- 0.04)
+Gradient Boosting Regression MSE: 0.14 (+/- 0.05)
+SGD Regression MSE: 0.15 (+/- 0.05)
+
+
+processing regression model on trait:  con
+classified as yes
+Lasso Regression MSE: 0.19 (+/- 0.11)
+Random Forest Regression MSE: 0.22 (+/- 0.11)
+KNN Regression MSE: 0.25 (+/- 0.09)
+MLP Regression MSE: 0.20 (+/- 0.12)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.10)
+SGD Regression MSE: 0.20 (+/- 0.10)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.15)
+Random Forest Regression MSE: 0.26 (+/- 0.15)
+KNN Regression MSE: 0.30 (+/- 0.14)
+MLP Regression MSE: 0.24 (+/- 0.13)
+Gradient Boosting Regression MSE: 0.23 (+/- 0.16)
+SGD Regression MSE: 0.25 (+/- 0.19)
+
+
+processing regression model on trait:  opn
+classified as yes
+Lasso Regression MSE: 0.10 (+/- 0.06)
+Random Forest Regression MSE: 0.11 (+/- 0.06)
+KNN Regression MSE: 0.13 (+/- 0.05)
+MLP Regression MSE: 0.10 (+/- 0.06)
+Gradient Boosting Regression MSE: 0.10 (+/- 0.06)
+SGD Regression MSE: 0.10 (+/- 0.06)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.10)
+Random Forest Regression MSE: 0.27 (+/- 0.10)
+KNN Regression MSE: 0.29 (+/- 0.11)
+MLP Regression MSE: 0.25 (+/- 0.11)
+Gradient Boosting Regression MSE: 0.25 (+/- 0.11)
+SGD Regression MSE: 0.27 (+/- 0.21)
+
+
+processing classification validation user file:  BillGates.csv
+processing regression validation user file:  BillGates.csv
+ext 2.80466683358
+neu 2.13281323671
+opn 4.39956666213
+agr 3.94682426761
+con 3.01140904518
+processing classification validation user file:  ConanOBrien.csv
+processing regression validation user file:  ConanOBrien.csv
+ext 2.78748108036
+neu 2.13298861608
+opn 4.39992843466
+agr 3.88377994872
+con 3.00195859746
+processing classification validation user file:  EmmaWatson.csv
+processing regression validation user file:  EmmaWatson.csv
+ext 2.81157372872
+neu 2.13201358352
+opn 4.3979171377
+agr 3.99308333433
+con 2.99599920942
+processing classification validation user file:  Google.csv
+processing regression validation user file:  Google.csv
+ext 2.77698955047
+neu 2.13304436142
+opn 4.40004342614
+agr 4.06675742691
+con 2.96782878353
+processing classification validation user file:  jimmyfallon.csv
+processing regression validation user file:  jimmyfallon.csv
+ext 2.79078405143
+neu 2.13297178392
+opn 4.39989371328
+agr 3.98842074
+con 2.97388706876
+processing classification validation user file:  katyperry.csv
+processing regression validation user file:  katyperry.csv
+ext 2.79547313572
+neu 2.13284714673
+opn 4.39963661171
+agr 3.99435340987
+con 2.97435076037
+processing classification validation user file:  LeoDiCaprio.csv
+processing regression validation user file:  LeoDiCaprio.csv
+ext 2.7975238574
+neu 2.13156580717
+opn 4.39699346476
+agr 3.94673349548
+con 3.02164633461
+processing classification validation user file:  MayoClinic.csv
+processing regression validation user file:  MayoClinic.csv
+ext 2.78122572801
+neu 2.13299734805
+opn 4.39994644696
+agr 3.89371594231
+con 2.99212806187
+processing classification validation user file:  nytimes.csv
+processing regression validation user file:  nytimes.csv
+ext 2.77697571125
+neu 2.13304561399
+opn 4.40004600994
+agr 3.81706573536
+con 3.02150202912
+processing classification validation user file:  Oprah.csv
+processing regression validation user file:  Oprah.csv
+ext 2.80508393149
+neu 2.13296451535
+opn 4.39987871968
+agr 4.03866930186
+con 2.98780458279
+processing classification validation user file:  Padilla_Comm.csv
+processing regression validation user file:  Padilla_Comm.csv
+ext 2.80121375383
+neu 2.13299710834
+opn 4.39994595249
+agr 4.05917509879
+con 2.99018663496
+processing classification validation user file:  rihanna.csv
+processing regression validation user file:  rihanna.csv
+ext 2.79276247104
+neu 2.1327227366
+opn 4.39937997852
+agr 3.95000288435
+con 2.97194354558
+processing classification validation user file:  taylorswift13.csv
+processing regression validation user file:  taylorswift13.csv
+ext 2.80216508205
+neu 2.13299662844
+opn 4.40106498638
+agr 3.99525783083
+con 2.97413505232
+processing classification validation user file:  TheEconomist.csv
+processing regression validation user file:  TheEconomist.csv
+ext 2.77667723282
+neu 2.1330326564
+opn 4.40001928102
+agr 3.84381967782
+con 2.9885363043
+Changye-Li-iMac-5k:traitsPredictor changye.li$ python -W ignore trainBuild.py
+Changye-Li-iMac-5k:traitsPredictor changye.li$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.DS_Store
+	.gitignore
+	PersonalityPredictor/
+	clean/.DS_Store
+	data/
+	mypersonality_final.csv
+	nltk_dl.py
+	trainBuild.pyc
+	trainProcess.pyc
+
+nothing added to commit but untracked files present (use "git add" to track)
+Changye-Li-iMac-5k:traitsPredictor changye.li$ python -W ignore modelRun.py
+processing trait:  ext
+SGD Accuracy: 0.55 (+/- 0.08)
+Random Forest Accuracy: 0.54 (+/- 0.02)
+Multinomial NB Accuracy: 0.56 (+/- 0.01)
+Bernoulli NB Accuracy: 0.56 (+/- 0.02)
+Gradient Boosting Accuracy: 0.56 (+/- 0.01)
+MLP Accuracy: 0.55 (+/- 0.03)
+
+
+processing trait:  neu
+SGD Accuracy: 0.53 (+/- 0.16)
+Random Forest Accuracy: 0.60 (+/- 0.01)
+Multinomial NB Accuracy: 0.62 (+/- 0.02)
+Bernoulli NB Accuracy: 0.63 (+/- 0.01)
+Gradient Boosting Accuracy: 0.62 (+/- 0.01)
+MLP Accuracy: 0.63 (+/- 0.01)
+
+
+processing trait:  agr
+SGD Accuracy: 0.52 (+/- 0.04)
+Random Forest Accuracy: 0.51 (+/- 0.03)
+Multinomial NB Accuracy: 0.53 (+/- 0.01)
+Bernoulli NB Accuracy: 0.52 (+/- 0.01)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.52 (+/- 0.01)
+
+
+processing trait:  con
+SGD Accuracy: 0.50 (+/- 0.05)
+Random Forest Accuracy: 0.51 (+/- 0.02)
+Multinomial NB Accuracy: 0.53 (+/- 0.04)
+Bernoulli NB Accuracy: 0.51 (+/- 0.04)
+Gradient Boosting Accuracy: 0.53 (+/- 0.02)
+MLP Accuracy: 0.52 (+/- 0.03)
+
+
+processing trait:  opn
+SGD Accuracy: 0.72 (+/- 0.07)
+Random Forest Accuracy: 0.73 (+/- 0.01)
+Multinomial NB Accuracy: 0.74 (+/- 0.00)
+Bernoulli NB Accuracy: 0.74 (+/- 0.02)
+Gradient Boosting Accuracy: 0.74 (+/- 0.01)
+MLP Accuracy: 0.74 (+/- 0.00)
+
+
+processing regression model on trait:  ext
+classified as yes
+Lasso Regression MSE: 0.16 (+/- 0.11)
+Random Forest Regression MSE: 0.18 (+/- 0.11)
+KNN Regression MSE: 0.21 (+/- 0.11)
+MLP Regression MSE: 0.16 (+/- 0.11)
+Gradient Boosting Regression MSE: 0.16 (+/- 0.11)
+SGD Regression MSE: 0.16 (+/- 0.11)
+
+
+classified as no
+Lasso Regression MSE: 0.36 (+/- 0.26)
+Random Forest Regression MSE: 0.40 (+/- 0.26)
+KNN Regression MSE: 0.45 (+/- 0.22)
+MLP Regression MSE: 0.38 (+/- 0.28)
+Gradient Boosting Regression MSE: 0.37 (+/- 0.28)
+SGD Regression MSE: 0.42 (+/- 0.42)
+
+
+processing regression model on trait:  neu
+classified as yes
+Lasso Regression MSE: 0.25 (+/- 0.09)
+Random Forest Regression MSE: 0.28 (+/- 0.09)
+KNN Regression MSE: 0.31 (+/- 0.10)
+MLP Regression MSE: 0.27 (+/- 0.10)
+Gradient Boosting Regression MSE: 0.26 (+/- 0.11)
+SGD Regression MSE: 0.27 (+/- 0.12)
+
+
+classified as no
+Lasso Regression MSE: 0.19 (+/- 0.03)
+Random Forest Regression MSE: 0.22 (+/- 0.03)
+KNN Regression MSE: 0.27 (+/- 0.02)
+MLP Regression MSE: 0.20 (+/- 0.02)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.02)
+SGD Regression MSE: 0.20 (+/- 0.02)
+
+
+processing regression model on trait:  agr
+classified as yes
+Lasso Regression MSE: 0.15 (+/- 0.12)
+Random Forest Regression MSE: 0.17 (+/- 0.12)
+KNN Regression MSE: 0.18 (+/- 0.12)
+MLP Regression MSE: 0.16 (+/- 0.12)
+Gradient Boosting Regression MSE: 0.16 (+/- 0.13)
+SGD Regression MSE: 0.15 (+/- 0.14)
+
+
+classified as no
+Lasso Regression MSE: 0.14 (+/- 0.04)
+Random Forest Regression MSE: 0.15 (+/- 0.04)
+KNN Regression MSE: 0.18 (+/- 0.05)
+MLP Regression MSE: 0.15 (+/- 0.05)
+Gradient Boosting Regression MSE: 0.14 (+/- 0.05)
+SGD Regression MSE: 0.15 (+/- 0.05)
+
+
+processing regression model on trait:  con
+classified as yes
+Lasso Regression MSE: 0.19 (+/- 0.11)
+Random Forest Regression MSE: 0.22 (+/- 0.10)
+KNN Regression MSE: 0.25 (+/- 0.09)
+MLP Regression MSE: 0.20 (+/- 0.09)
+Gradient Boosting Regression MSE: 0.20 (+/- 0.10)
+SGD Regression MSE: 0.20 (+/- 0.08)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.15)
+Random Forest Regression MSE: 0.25 (+/- 0.15)
+KNN Regression MSE: 0.30 (+/- 0.14)
+MLP Regression MSE: 0.24 (+/- 0.15)
+Gradient Boosting Regression MSE: 0.23 (+/- 0.16)
+SGD Regression MSE: 0.25 (+/- 0.21)
+
+
+processing regression model on trait:  opn
+classified as yes
+Lasso Regression MSE: 0.10 (+/- 0.06)
+Random Forest Regression MSE: 0.11 (+/- 0.06)
+KNN Regression MSE: 0.13 (+/- 0.05)
+MLP Regression MSE: 0.11 (+/- 0.06)
+Gradient Boosting Regression MSE: 0.10 (+/- 0.06)
+SGD Regression MSE: 0.10 (+/- 0.06)
+
+
+classified as no
+Lasso Regression MSE: 0.23 (+/- 0.10)
+Random Forest Regression MSE: 0.27 (+/- 0.10)
+KNN Regression MSE: 0.29 (+/- 0.11)
+MLP Regression MSE: 0.25 (+/- 0.12)
+Gradient Boosting Regression MSE: 0.25 (+/- 0.11)
+SGD Regression MSE: 0.27 (+/- 0.22)
+
+
+processing classification validation user file:  BillGates.csv
+processing regression validation user file:  BillGates.csv
+ext 2.80466683358
+neu 2.17401057808
+opn 4.39956666213
+agr 3.94682426761
+con 3.01140904518
+processing classification validation user file:  ConanOBrien.csv
+processing regression validation user file:  ConanOBrien.csv
+ext 2.78748108036
+neu 2.19772974091
+opn 4.40070053528
+agr 3.88377994872
+con 3.00195859746
+processing classification validation user file:  EmmaWatson.csv
+processing regression validation user file:  EmmaWatson.csv
+ext 2.81157372872
+neu 2.17379932741
+opn 4.3979171377
+agr 3.99308333433
+con 2.99599920942
+processing classification validation user file:  Google.csv
+processing regression validation user file:  Google.csv
+ext 2.77698955047
+neu 2.14631724597
+opn 4.40004342614
+agr 4.06675742691
+con 2.96782878353
+processing classification validation user file:  jimmyfallon.csv
+processing regression validation user file:  jimmyfallon.csv
+ext 2.79078405143
+neu 2.17607335585
+opn 4.39989371328
+agr 3.98842074
+con 2.97388706876
+processing classification validation user file:  katyperry.csv
+processing regression validation user file:  katyperry.csv
+ext 2.79547313572
+neu 2.1648366871
+opn 4.39963661171
+agr 3.99435340987
+con 2.97435076037
+processing classification validation user file:  LeoDiCaprio.csv
+processing regression validation user file:  LeoDiCaprio.csv
+ext 2.7975238574
+neu 2.19704207561
+opn 4.39699346476
+agr 3.94673349548
+con 3.02164633461
+processing classification validation user file:  MayoClinic.csv
+processing regression validation user file:  MayoClinic.csv
+ext 2.78122572801
+neu 2.15985356481
+opn 4.39994644696
+agr 3.89371594231
+con 2.99212806187
+processing classification validation user file:  nytimes.csv
+processing regression validation user file:  nytimes.csv
+ext 2.77697571125
+neu 2.2150970714
+opn 4.40004600994
+agr 3.81706573536
+con 3.02150202912
+processing classification validation user file:  Oprah.csv
+processing regression validation user file:  Oprah.csv
+ext 2.80508393149
+neu 2.15884930669
+opn 4.39987871968
+agr 4.03866930186
+con 2.98780458279
+processing classification validation user file:  Padilla_Comm.csv
+processing regression validation user file:  Padilla_Comm.csv
+ext 2.80121375383
+neu 2.16070587732
+opn 4.39994595249
+agr 4.05917509879
+con 2.99018663496
+processing classification validation user file:  rihanna.csv
+processing regression validation user file:  rihanna.csv
+ext 2.79276247104
+neu 2.17806844576
+opn 4.39937997852
+agr 3.95000288435
+con 2.97194354558
+processing classification validation user file:  taylorswift13.csv
+processing regression validation user file:  taylorswift13.csv
+ext 2.80216508205
+neu 2.19153409388
+opn 4.40070851861
+agr 3.99525783083
+con 2.97413505232
+processing classification validation user file:  TheEconomist.csv
+processing regression validation user file:  TheEconomist.csv
+ext 2.77667723282
+neu 2.18220985367
+opn 4.40001928102
+agr 3.84381967782
+con 2.9885363043
