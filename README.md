@@ -4,6 +4,8 @@
 
 This is a simple Python personality predictor. Basically, it will cluster users using Big Five test style classification, and try to group users by the same trait to assign trait scores.
 
+*Data will __not__ be provided. Please apply your own dataset.*
+
 ## Features
 - Predicting users' personality traits.
 - Grouping people by users' personality trait
